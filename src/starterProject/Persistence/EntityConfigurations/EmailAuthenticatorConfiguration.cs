@@ -23,3 +23,4 @@ public class EmailAuthenticatorConfiguration : IEntityTypeConfiguration<EmailAut
         builder.HasOne(ea => ea.User);
     }
 }
+

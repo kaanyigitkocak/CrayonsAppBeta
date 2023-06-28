@@ -1,4 +1,5 @@
 ﻿using Core.Security.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
@@ -8,6 +9,10 @@ namespace Persistence.Contexts;
 public class BaseDbContext : DbContext
 {
     protected IConfiguration Configuration { get; set; }
+    public DbSet<Teacher> Teachers { get; set; }
+    public DbSet<School> Schools { get; set; }
+    public DbSet<Parent> Parents { get; set; }
+    public DbSet<Student> Students { get; set; }
     public DbSet<EmailAuthenticator> EmailAuthenticators { get; set; }
     public DbSet<OperationClaim> OperationClaims { get; set; }
     public DbSet<OtpAuthenticator> OtpAuthenticators { get; set; }
