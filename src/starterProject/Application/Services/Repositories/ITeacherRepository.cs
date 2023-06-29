@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Core.Persistence.Repositories;
+using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Services.Repositories;
-public interface ITeacherRepository
-{
-}
+public interface ITeacherRepository : IAsyncRepository<Teacher, int>, IRepository<Teacher, int> { }
