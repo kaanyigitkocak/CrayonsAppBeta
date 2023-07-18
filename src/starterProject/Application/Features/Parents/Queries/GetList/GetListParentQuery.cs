@@ -1,0 +1,55 @@
+﻿using Application.Services.Repositories;
+using AutoMapper;
+using Core.Application.Requests;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
+using Domain.Entities;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.Features.Parents.Queries.GetList;
+public class GetListParentQuery : IRequest<GetListResponse<GetListParentListItemDto>>
+{
+    public PageRequest PageRequest { get; set; }
+
+    public GetListParentQuery()
+    {
+        PageRequest = new PageRequest { PageIndex = 0, PageSize = 10 };
+    }
+
+    public GetListParentQuery(PageRequest pageRequest)
+    {
+        PageRequest = pageRequest.PageSize == 0 && pageRequest.PageIndex == 0
+        ? new PageRequest { PageIndex = 0, PageSize = 10 }
+        :  pageRequest;
+        
+    }
+
+    public class GetListParentQueryHandler : IRequestHandler<GetListParentQuery, GetListResponse<GetListParentListItemDto>>
+    {
+        private readonly IParentRepository _parentRepository;
+        private readonly IMapper _mapper;
+
+        public GetListParentQueryHandler(IParentRepository parentRepository, IMapper mapper)
+        {
+            _parentRepository = parentRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<GetListResponse<GetListParentListItemDto>> Handle(GetListParentQuery request, CancellationToken cancellationToken)
+        {
+            IPaginate<Parent> parents = await _parentRepository.GetListAsync(
+                index: request.PageRequest.PageIndex,
+                size: request.PageRequest.PageSize,
+                cancellationToken: cancellationToken
+            );
+
+            GetListResponse<GetListParentListItemDto> response = _mapper.Map<GetListResponse<GetListParentListItemDto>>(parents);
+            return response;
+        }
+    }
+}

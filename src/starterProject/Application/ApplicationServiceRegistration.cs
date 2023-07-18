@@ -1,5 +1,9 @@
 ﻿using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
+using Application.Services.ParentService;
+using Application.Services.SchoolService;
+using Application.Services.StudentService;
+using Application.Services.TeacherService;
 using Application.Services.UsersService;
 using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Caching;
@@ -44,6 +48,10 @@ public static class ApplicationServiceRegistration
         services.AddScoped<IAuthService, AuthManager>();
         services.AddScoped<IAuthenticatorService, AuthenticatorManager>();
         services.AddScoped<IUserService, UserManager>();
+        services.AddScoped<IParentService, ParentManager>();
+        services.AddScoped<ITeacherService, TeacherManager>();
+        services.AddScoped<ISchoolService, SchoolManager>();
+        services.AddScoped<IStudentService, StudentManager>();
 
         return services;
     }

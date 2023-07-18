@@ -15,14 +15,14 @@ public class Parent : Entity<int>
 
     public Parent(
         int id,
-        Student? student,
+        int studentId,
         string name, 
         string email, 
         string phoneNumber) 
         : this()
     {
         Id = id;
-        Student = student;
+        StudentId = studentId;
         Name = name;
         Email = email;
         PhoneNumber = phoneNumber;

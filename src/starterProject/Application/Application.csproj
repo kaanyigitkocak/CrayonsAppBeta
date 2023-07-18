@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\" />
+    <Folder Include="Features\Parents\Constants\" />
   </ItemGroup>
 
   <ItemGroup>
