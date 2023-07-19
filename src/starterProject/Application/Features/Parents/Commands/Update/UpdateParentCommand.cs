@@ -12,6 +12,7 @@ public class UpdateParentCommand : IRequest<UpdatedParentResponse>
     public string Name { get; set; }
     public string Email { get; set; }
     public int PhoneNumber { get; set; }
+    public int StudentId { get; set; }
     public UpdateParentCommand()
     {
         Name = string.Empty;
@@ -19,15 +20,16 @@ public class UpdateParentCommand : IRequest<UpdatedParentResponse>
         PhoneNumber = default;
     }
 
-    public UpdateParentCommand(int id, string name, int phoneNumber, string email)
+    public UpdateParentCommand(int id, int studentId, string name, int phoneNumber, string email)
     {
         Id = id;
+        StudentId = studentId;
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
     }
 
-    public class UpdateParentCommandHandler : IRequestHandler<UpdateParentCommand, UpdatedParentResponse>
+public class UpdateParentCommandHandler : IRequestHandler<UpdateParentCommand, UpdatedParentResponse>
     {
         private readonly IParentRepository _parentRepository;
         private readonly IMapper _mapper;

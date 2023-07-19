@@ -19,9 +19,7 @@ public class MappingProfiles : Profile
     {
         CreateMap<Parent, CreateParentCommand>().ReverseMap();
         CreateMap<Parent, CreatedParentResponse>().ReverseMap();
-        CreateMap<UpdateParentCommand, Parent >()
-            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
-            .ForMember(dest => dest.StudentId, opt => opt.Ignore());
+        CreateMap<Parent, UpdateParentCommand > ().ReverseMap();
         CreateMap<Parent, UpdatedParentResponse>().ReverseMap();
         CreateMap<Parent, DeleteParentCommand>().ReverseMap();
         CreateMap<Parent, DeletedParentResponse>().ReverseMap();

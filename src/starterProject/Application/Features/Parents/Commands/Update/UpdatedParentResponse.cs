@@ -12,6 +12,7 @@ public class UpdatedParentResponse : IResponse
     public string Name { get; set; }
     public string Email { get; set; }
     public int PhoneNumber { get; set; }
+    public int StudentId { get; set; }
     public UpdatedParentResponse()
     {
         Name = string.Empty;
@@ -23,6 +24,7 @@ public class UpdatedParentResponse : IResponse
     {
         Id = id;
         Name = name;
+        StudentId = studentId;
         PhoneNumber = phoneNumber;
         Email = email;
     }
