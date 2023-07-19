@@ -6,7 +6,7 @@ public class Parent : Entity<int>
     public string Name { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-    public int StudentId { get; set; }
+    public int? StudentId { get; set; }
     public virtual Student? Student { get; set; }
 
     public Parent()

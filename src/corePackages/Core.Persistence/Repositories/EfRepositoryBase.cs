@@ -1,4 +1,5 @@
-﻿using Core.Persistence.Dynamic;
+﻿using Core.CrossCuttingConcerns.Exceptions.Types;
+using Core.Persistence.Dynamic;
 using Core.Persistence.Paging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -41,10 +42,29 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
+        
+        TEntity? existingEntity = await Context.Set<TEntity>().FindAsync(entity.Id);
+        if (existingEntity == null)
+        {
+            throw new NotFoundException("Entity does not exist in db ");
+        }
         entity.UpdatedDate = DateTime.UtcNow;
-        Context.Update(entity);
+        entity.CreatedDate = existingEntity.CreatedDate;
+
+        PropertyInfo[] properties = typeof(TEntity).GetProperties();
+        foreach (PropertyInfo property in properties)
+        {
+            object newValue = property.GetValue(entity)!;
+            object existingValue = property.GetValue(existingEntity)!;
+
+            if (newValue != null && !newValue.Equals(existingValue))
+            {
+                property.SetValue(existingEntity, newValue);
+            }
+        }
+
         await Context.SaveChangesAsync();
-        return entity;
+        return existingEntity;
     }
 
     public async Task<ICollection<TEntity>> UpdateRangeAsync(ICollection<TEntity> entities)
@@ -172,10 +192,32 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
 
     public TEntity Update(TEntity entity)
     {
+        TEntity? existingEntity = Context.Set<TEntity>().Find(entity.Id);
+        if (existingEntity == null)
+        {
+            throw new NotFoundException("Entity does not exist in db");
+        }
         entity.UpdatedDate = DateTime.UtcNow;
-        Context.Update(entity);
+        entity.CreatedDate = existingEntity.CreatedDate;
+
+        
+
+        entity.CreatedDate = existingEntity.CreatedDate;
+
+        PropertyInfo[] properties = typeof(TEntity).GetProperties();
+        foreach (PropertyInfo property in properties)
+        {
+            object newValue = property.GetValue(entity)!;
+            object existingValue = property.GetValue(existingEntity)!;
+
+            if (newValue != null && !newValue.Equals(existingValue))
+            {
+                property.SetValue(existingEntity, newValue);
+            }
+        }
+
         Context.SaveChanges();
-        return entity;
+        return existingEntity;
     }
 
     public ICollection<TEntity> UpdateRange(ICollection<TEntity> entities)

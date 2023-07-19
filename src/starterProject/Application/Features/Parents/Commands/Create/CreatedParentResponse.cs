@@ -12,6 +12,7 @@ public class CreatedParentResponse : IResponse
     public string Name { get; set; }
     public string Email { get; set; }
     public int PhoneNumber { get; set; }
+    public int StudentId { get; set; }
 
     public CreatedParentResponse()
     {
@@ -20,9 +21,10 @@ public class CreatedParentResponse : IResponse
         PhoneNumber = default;
     }
 
-    public CreatedParentResponse(int id, string name, int phoneNumber, string email)
+    public CreatedParentResponse(int id, int studentId, string name, int phoneNumber, string email)
     {
         Id = id;
+        StudentId = studentId;
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;

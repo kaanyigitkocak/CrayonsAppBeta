@@ -14,21 +14,24 @@ public int Id { get; set; }
 public string Name { get; set; }
 public string Email { get; set; }
 public int PhoneNumber { get; set; }
-public bool Status { get; set; }
+public string StudentName { get; set; }
+public DateTime StudentDateOfBirth { get; set; }
+public string StudentClass { get; set; }
 
-public GetListParentListItemDto()
+
+
+    public GetListParentListItemDto()
 {
     Name = string.Empty;
     Email = string.Empty;
     PhoneNumber = default;
 }
 
-public GetListParentListItemDto(int id, string name, int phoneNumber, string email, bool status)
+public GetListParentListItemDto(int id, string name, int phoneNumber, string email)
 {
     Id = id;
     Name = name;
     PhoneNumber = phoneNumber;
     Email = email;
-    Status = status;
 }
 }

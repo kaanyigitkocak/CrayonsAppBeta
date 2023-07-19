@@ -5,6 +5,7 @@ using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,7 @@ public class GetListParentQuery : IRequest<GetListResponse<GetListParentListItem
             IPaginate<Parent> parents = await _parentRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
+                include : p => p.Include(p => p.Student!),
                 cancellationToken: cancellationToken
             );
 

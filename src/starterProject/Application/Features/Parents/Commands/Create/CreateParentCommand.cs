@@ -18,6 +18,7 @@ public class CreateParentCommand  : IRequest<CreatedParentResponse>
     public string Name { get; set; }
     public string Email { get; set; }
     public int PhoneNumber { get; set; }
+    public int StudentId { get; set; }
 
     public CreateParentCommand()
     {
@@ -26,14 +27,13 @@ public class CreateParentCommand  : IRequest<CreatedParentResponse>
         PhoneNumber = default;
     }
 
-    public CreateParentCommand(int id, string name, int phoneNumber, string email)
+    public CreateParentCommand(int id, int studentId, string name, int phoneNumber, string email)
     {
         Id = id;
+        StudentId = studentId;
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
-      
-
     }
 
     public class CreateParentCommandHandler : IRequestHandler<CreateParentCommand, CreatedParentResponse>

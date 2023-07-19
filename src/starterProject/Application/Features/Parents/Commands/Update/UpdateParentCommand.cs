@@ -12,7 +12,6 @@ public class UpdateParentCommand : IRequest<UpdatedParentResponse>
     public string Name { get; set; }
     public string Email { get; set; }
     public int PhoneNumber { get; set; }
-
     public UpdateParentCommand()
     {
         Name = string.Empty;
@@ -26,7 +25,6 @@ public class UpdateParentCommand : IRequest<UpdatedParentResponse>
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
-
     }
 
     public class UpdateParentCommandHandler : IRequestHandler<UpdateParentCommand, UpdatedParentResponse>
