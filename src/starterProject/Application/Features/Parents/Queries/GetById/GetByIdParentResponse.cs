@@ -8,25 +8,35 @@ using System.Threading.Tasks;
 namespace Application.Features.Parents.Queries.GetById;
 public class GetByIdParentResponse : IResponse
 {
+ 
     public int Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string Name { get; set; }
     public string Email { get; set; }
-    public bool Status { get; set; }
+    public string PhoneNumber { get; set; }
+    public string StudentName { get; set; }
+    public DateTime StudentDateOfBirth { get; set; }
+    public string StudentClass { get; set; }
+
+
 
     public GetByIdParentResponse()
     {
-        FirstName = string.Empty;
-        LastName = string.Empty;
+        Name = string.Empty;
         Email = string.Empty;
+        PhoneNumber = string.Empty;
+        StudentClass = string.Empty;
+        StudentName = string.Empty;
+        StudentDateOfBirth = DateTime.MinValue;
     }
 
-    public GetByIdParentResponse(int id, string firstName, string lastName, string email, bool status)
+    public GetByIdParentResponse(int id, string name,string studentName, string studentClass, DateTime studentDateOfBirth, string phoneNumber, string email)
     {
         Id = id;
-        FirstName = firstName;
-        LastName = lastName;
+        Name = name;
+        PhoneNumber = phoneNumber;
         Email = email;
-        Status = status;
+        StudentDateOfBirth = studentDateOfBirth;
+        StudentClass = studentClass;
+        StudentName = studentName;
     }
 }

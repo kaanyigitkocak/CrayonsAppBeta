@@ -21,11 +21,9 @@ public class DeleteParentCommand : IRequest<DeletedParentResponse>
       
     }
 
-    public DeleteParentCommand(int id, string name, int phoneNumber, string email, bool status)
+    public DeleteParentCommand(int id)
     {
         Id = id;
-       
-
     }
 
     public class DeleteParentCommandHandler : IRequestHandler<DeleteParentCommand, DeletedParentResponse>

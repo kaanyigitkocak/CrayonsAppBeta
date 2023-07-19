@@ -19,13 +19,17 @@ public class MappingProfiles : Profile
     {
         CreateMap<Parent, CreateParentCommand>().ReverseMap();
         CreateMap<Parent, CreatedParentResponse>().ReverseMap();
-        CreateMap<Parent, UpdateParentCommand > ().ReverseMap();
+        CreateMap<Parent, UpdateParentCommand> ().ReverseMap();
         CreateMap<Parent, UpdatedParentResponse>().ReverseMap();
         CreateMap<Parent, DeleteParentCommand>().ReverseMap();
         CreateMap<Parent, DeletedParentResponse>().ReverseMap();
         CreateMap<Parent, GetByIdParentResponse>().ReverseMap();
-        CreateMap<Parent, GetListParentListItemDto>().ReverseMap();
+        CreateMap<Parent, GetListParentListItemDto>()
+        .ForMember(dest => dest.StudentName, opt => opt.MapFrom(src => src.Student != null ? src.Student.Name : null))
+        .ForMember(dest => dest.StudentDateOfBirth, opt => opt.MapFrom(src => src.Student != null ? src.Student.DateOfBirth : (DateTime?)null))
+        .ForMember(dest => dest.StudentClass, opt => opt.MapFrom(src => src.Student != null ? src.Student.Class : null));
         CreateMap<IPaginate<Parent>, GetListResponse<GetListParentListItemDto>>().ReverseMap();
+
     }
 }
 

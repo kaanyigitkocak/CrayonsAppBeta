@@ -27,9 +27,10 @@ public class UpdateParentCommand : IRequest<UpdatedParentResponse>
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
+        StudentId = 0;
     }
 
-public class UpdateParentCommandHandler : IRequestHandler<UpdateParentCommand, UpdatedParentResponse>
+    public class UpdateParentCommandHandler : IRequestHandler<UpdateParentCommand, UpdatedParentResponse>
     {
         private readonly IParentRepository _parentRepository;
         private readonly IMapper _mapper;

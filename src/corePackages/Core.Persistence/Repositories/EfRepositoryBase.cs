@@ -394,7 +394,9 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
     private async Task setEntityAsSoftDeletedAsync(IEntityTimestamps entity)
     {
         if (entity.DeletedDate.HasValue)
-            return;
+            throw new InvalidOperationException(
+                "Entity already has a deleted date value"
+            );
         entity.DeletedDate = DateTime.UtcNow;
 
         var navigations = Context
@@ -444,7 +446,9 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
     private void setEntityAsSoftDeleted(IEntityTimestamps entity)
     {
         if (entity.DeletedDate.HasValue)
-            return;
+            throw new InvalidOperationException(
+                "Entity already has a deleted date value"
+            );
         entity.DeletedDate = DateTime.UtcNow;
 
         var navigations = Context

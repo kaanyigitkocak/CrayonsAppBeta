@@ -34,6 +34,7 @@ public class CreateParentCommand  : IRequest<CreatedParentResponse>
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
+        StudentId = 0;
     }
 
     public class CreateParentCommandHandler : IRequestHandler<CreateParentCommand, CreatedParentResponse>

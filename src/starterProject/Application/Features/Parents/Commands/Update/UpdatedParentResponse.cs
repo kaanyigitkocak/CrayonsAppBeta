@@ -18,6 +18,7 @@ public class UpdatedParentResponse : IResponse
         Name = string.Empty;
         Email = string.Empty;
         PhoneNumber = string.Empty;
+        StudentId = 0;
     }
 
     public UpdatedParentResponse(int id, int studentId, string name, string phoneNumber, string email)

@@ -19,6 +19,7 @@ public class CreatedParentResponse : IResponse
         Name = string.Empty;
         Email = string.Empty;
         PhoneNumber = string.Empty;
+        StudentId = 0;
     }
 
     public CreatedParentResponse(int id, int studentId, string name, string phoneNumber, string email)
