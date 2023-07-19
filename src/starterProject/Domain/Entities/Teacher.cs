@@ -24,7 +24,7 @@ namespace Domain.Entities
 
         public Teacher(
             int id,
-            School? school,
+            int schoolId,
             string name, 
             string email, 
             string phoneNumber, 
@@ -32,7 +32,7 @@ namespace Domain.Entities
             : this()
         {
             Id=id;
-            School=school;
+            SchoolId=schoolId;
             Name = name;
             Email = email;
             PhoneNumber = phoneNumber;

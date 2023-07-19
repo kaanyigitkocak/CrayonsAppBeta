@@ -10,13 +10,13 @@ namespace Application.Features.Parents.Queries.GetList;
 
 public class GetListParentListItemDto : IDto
 { 
-public int Id { get; set; }
-public string Name { get; set; }
-public string Email { get; set; }
-public int PhoneNumber { get; set; }
-public string StudentName { get; set; }
-public DateTime StudentDateOfBirth { get; set; }
-public string StudentClass { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public int PhoneNumber { get; set; }
+    public string StudentName { get; set; }
+    public DateTime StudentDateOfBirth { get; set; }
+    public string StudentClass { get; set; }
 
 
 

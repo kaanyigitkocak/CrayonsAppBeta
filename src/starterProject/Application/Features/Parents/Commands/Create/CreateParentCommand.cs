@@ -17,17 +17,17 @@ public class CreateParentCommand  : IRequest<CreatedParentResponse>
     public int Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
-    public int PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
     public int StudentId { get; set; }
 
     public CreateParentCommand()
     {
         Name = string.Empty;
         Email = string.Empty;
-        PhoneNumber = default;
+        PhoneNumber = string.Empty;
     }
 
-    public CreateParentCommand(int id, int studentId, string name, int phoneNumber, string email)
+    public CreateParentCommand(int id, int studentId, string name, string phoneNumber, string email)
     {
         Id = id;
         StudentId = studentId;

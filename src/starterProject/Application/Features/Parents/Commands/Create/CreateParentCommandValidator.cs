@@ -12,7 +12,7 @@ public class CreateParentCommandValidator : AbstractValidator<CreateParentComman
     public CreateParentCommandValidator()
     {
         RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
-        RuleFor(c => c.PhoneNumber).NotEmpty().GreaterThanOrEqualTo(2);
+        RuleFor(c => c.PhoneNumber).NotEmpty().MinimumLength(2);
         RuleFor(c => c.Email).NotEmpty().EmailAddress();
     }
 }

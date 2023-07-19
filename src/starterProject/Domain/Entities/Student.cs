@@ -25,18 +25,18 @@ public class Student : Entity<int>
 
     public Student(
         int id,
-        Parent? parent,
-        School? school,
-        Teacher? teacher,
+        int parentId,
+        int schoolId,
+        int teacherId,
         string name, 
         DateTime dateOfBirth, 
         string studentClass) 
         : this()
     {
         Id = id;
-        Parent = parent;
-        School = school;
-        Teacher = teacher;
+        ParentId = parentId;
+        SchoolId = schoolId;
+        TeacherId = teacherId;
         Name = name;
         DateOfBirth = dateOfBirth;
         Class = studentClass;

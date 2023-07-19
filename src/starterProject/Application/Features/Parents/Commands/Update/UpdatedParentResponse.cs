@@ -11,16 +11,16 @@ public class UpdatedParentResponse : IResponse
     public int Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
-    public int PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
     public int StudentId { get; set; }
     public UpdatedParentResponse()
     {
         Name = string.Empty;
         Email = string.Empty;
-        PhoneNumber = default;
+        PhoneNumber = string.Empty;
     }
 
-    public UpdatedParentResponse(int id, int studentId, string name, int phoneNumber, string email)
+    public UpdatedParentResponse(int id, int studentId, string name, string phoneNumber, string email)
     {
         Id = id;
         Name = name;
