@@ -70,8 +70,9 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
     public async Task<ICollection<TEntity>> UpdateRangeAsync(ICollection<TEntity> entities)
     {
         foreach (TEntity entity in entities)
-            entity.UpdatedDate = DateTime.UtcNow;
-        Context.UpdateRange(entities);
+        {
+            await UpdateAsync(entity);
+        }
         await Context.SaveChangesAsync();
         return entities;
     }
@@ -223,8 +224,10 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
     public ICollection<TEntity> UpdateRange(ICollection<TEntity> entities)
     {
         foreach (TEntity entity in entities)
-            entity.UpdatedDate = DateTime.UtcNow;
-        Context.UpdateRange(entities);
+        {
+            Update(entity);
+        }
+
         Context.SaveChanges();
         return entities;
     }
