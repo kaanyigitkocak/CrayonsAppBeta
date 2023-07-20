@@ -31,7 +31,9 @@ public class GetByIdStudentQuery : IRequest<GetByIdStudentResponse>
         public async Task<GetByIdStudentResponse> Handle(GetByIdStudentQuery request, CancellationToken cancellationToken)
         {
             Student? student = await _studentRepository.GetAsync(predicate: s => s.Id == request.Id
-            , include : s=> s.Include(s => s.School!).Include(s => s.Parent!).Include(s => s.Teacher!)
+            , include : s=> s.Include(s => s.School!)
+                             .Include(s => s.Parent!)
+                             .Include(s => s.Teacher!)
             , cancellationToken: cancellationToken);
 
             GetByIdStudentResponse response = _mapper.Map<GetByIdStudentResponse>(student);

@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Parents\Constants\" />
+    <Folder Include="Features\Students\Constants\" />
   </ItemGroup>
 
   <ItemGroup>

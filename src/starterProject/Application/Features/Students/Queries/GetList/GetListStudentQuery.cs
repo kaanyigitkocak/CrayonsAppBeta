@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Features.Students.Queries.GetList;
-public class GetListStudentQuery : IRequest<GetListResponse<GetListParentListItemResponse>>
+public class GetListStudentQuery : IRequest<GetListResponse<GetListStudentListItemResponse>>
 {
     public PageRequest PageRequest { get; set; }
 
@@ -29,7 +29,7 @@ public class GetListStudentQuery : IRequest<GetListResponse<GetListParentListIte
         : pageRequest;
     }
 
-    public class GetListStudentQueryHandler : IRequestHandler<GetListStudentQuery, GetListResponse<GetListParentListItemResponse>>
+    public class GetListStudentQueryHandler : IRequestHandler<GetListStudentQuery, GetListResponse<GetListStudentListItemResponse>>
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IMapper _mapper;
@@ -40,7 +40,7 @@ public class GetListStudentQuery : IRequest<GetListResponse<GetListParentListIte
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListParentListItemResponse>> Handle(GetListStudentQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListStudentListItemResponse>> Handle(GetListStudentQuery request, CancellationToken cancellationToken)
         {
             IPaginate<Student> students = await _studentRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
@@ -51,7 +51,7 @@ public class GetListStudentQuery : IRequest<GetListResponse<GetListParentListIte
                 cancellationToken: cancellationToken
             );
 
-            GetListResponse<GetListParentListItemResponse> response = _mapper.Map<GetListResponse<GetListParentListItemResponse>>(students);
+            GetListResponse<GetListStudentListItemResponse> response = _mapper.Map<GetListResponse<GetListStudentListItemResponse>>(students);
             return response;
         }
     }

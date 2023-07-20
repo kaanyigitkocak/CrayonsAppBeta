@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace Application.Features.Students.Commands.Create;
 public class CreateStudentCommand : IRequest<CreatedStudentResponse>
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public DateTime DateOfBirth { get; set; }
     public string Class { get; set; }
@@ -24,10 +25,14 @@ public class CreateStudentCommand : IRequest<CreatedStudentResponse>
         Name = string.Empty;
         DateOfBirth = default(DateTime);
         Class = string.Empty;
+        TeacherId = 0;
+        ParentId = 0;
+        SchoolId = 0;
     }
 
-    public CreateStudentCommand(string name, DateTime dateOfBirth, string studentClass, int teacherId, int parentId, int schoolId)
+    public CreateStudentCommand(int id, string name, DateTime dateOfBirth, string studentClass, int teacherId, int parentId, int schoolId)
     {
+        Id = id;
         Name = name;
         DateOfBirth = dateOfBirth;
         Class = studentClass;

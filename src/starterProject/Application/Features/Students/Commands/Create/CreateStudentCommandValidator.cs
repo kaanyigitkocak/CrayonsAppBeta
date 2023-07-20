@@ -13,9 +13,9 @@ public class CreateStudentCommandValidator : AbstractValidator<CreateStudentComm
         RuleFor(c => c.Name).NotEmpty().MinimumLength(2);
         RuleFor(c => c.DateOfBirth).NotEmpty().Must(BeAValidDate);
         RuleFor(c => c.Class).NotEmpty().MinimumLength(2);
-        RuleFor(c => c.TeacherId).NotEmpty().GreaterThan(0);
-        RuleFor(c => c.ParentId).NotEmpty().GreaterThan(0);
-        RuleFor(c => c.SchoolId).NotEmpty().GreaterThan(0);
+        RuleFor(c => c.TeacherId);
+        RuleFor(c => c.ParentId);
+        RuleFor(c => c.SchoolId);
     }
 
     private bool BeAValidDate(DateTime date)
