@@ -15,7 +15,7 @@ public class ParentConfiguration : IEntityTypeConfiguration<Parent>
         builder.ToTable("Parents").HasKey(t => t.Id);
 
         builder.Property(t => t.Id).HasColumnName("Id").IsRequired();
-        builder.Property(t => t.StudentId).HasColumnName("StudentId").IsRequired();
+        builder.Property(t => t.StudentId).HasColumnName("StudentId");
         builder.Property(t => t.PhoneNumber).HasColumnName("PhoneNumber").IsRequired();
         builder.Property(t => t.Email).HasColumnName("Email").IsRequired();
         builder.Property(t => t.CreatedDate).HasColumnName("CreatedDate").IsRequired();
@@ -26,9 +26,36 @@ public class ParentConfiguration : IEntityTypeConfiguration<Parent>
             .WithOne(s => s.Parent)
             .HasForeignKey<Student>(s => s.ParentId)
             .OnDelete(DeleteBehavior.NoAction);
-        
+
 
         builder.HasQueryFilter(t => !t.DeletedDate.HasValue);
+        builder.HasData(GetParentSeeds());
+    }
 
+    private IEnumerable<Parent> GetParentSeeds()
+    {
+        List<Parent> parents = new List<Parent>();
+
+        Parent parent1 = new Parent
+        {
+            Id = 1,
+            Name = "John Doe",
+            Email = "john.doe@example.com",
+            PhoneNumber = "123-456-7890",
+            StudentId = 1,
+        };
+        parents.Add(parent1);
+
+        Parent parent2 = new Parent
+        {
+            Id = 2,
+            Name = "Alice Smith",
+            Email = "alice.smith@example.com",
+            PhoneNumber = "987-654-3210",
+            StudentId = 2,
+        };
+        parents.Add(parent2);
+
+        return parents;
     }
 }

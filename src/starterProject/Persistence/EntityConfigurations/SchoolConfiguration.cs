@@ -17,7 +17,7 @@ public class SchoolConfiguration : IEntityTypeConfiguration<School>
         builder.Property(t => t.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(t => t.DeletedDate).HasColumnName("DeletedDate");
 
-        
+
         builder.HasMany(t => t.Students)
             .WithOne(s => s.School)
             .HasForeignKey(s => s.SchoolId).OnDelete(DeleteBehavior.NoAction);
@@ -26,8 +26,35 @@ public class SchoolConfiguration : IEntityTypeConfiguration<School>
             .HasForeignKey(s => s.SchoolId).OnDelete(DeleteBehavior.NoAction);
 
         builder.HasQueryFilter(t => !t.DeletedDate.HasValue);
-
+        builder.HasData(GetSchoolSeeds());
     }
+
+    private IEnumerable<School> GetSchoolSeeds()
+    {
+        List<School> schools = new List<School>();
+
+        School school1 = new School
+        {
+            Id = 1,
+            Name = "Example School",
+            Address = "123 Main St",
+            PhoneNumber = "555-123-4567",
+        };
+        schools.Add(school1);
+
+        School school2 = new School
+        {
+            Id = 2,
+            Name = "Another School",
+            Address = "456 Elm Ave",
+            PhoneNumber = "555-987-6543",
+        };
+        schools.Add(school2);
+
+
+        return schools;
+    }
+
 }
 
 
