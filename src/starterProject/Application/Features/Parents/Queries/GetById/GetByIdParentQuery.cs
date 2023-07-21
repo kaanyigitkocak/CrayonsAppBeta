@@ -3,6 +3,7 @@ using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,9 @@ public class GetByIdParentQuery : IRequest<GetByIdParentResponse>
 
         public async Task<GetByIdParentResponse> Handle(GetByIdParentQuery request, CancellationToken cancellationToken)
         {
-            Parent? parent = await _parentRepository.GetAsync(predicate: b => b.Id == request.Id, cancellationToken: cancellationToken);
+            Parent? parent = await _parentRepository.GetAsync(predicate: b => b.Id == request.Id,
+                                                              include: p => p.Include(p => p.Students),
+                                                              cancellationToken: cancellationToken);
 
             GetByIdParentResponse response = _mapper.Map<GetByIdParentResponse>(parent);
             return response;

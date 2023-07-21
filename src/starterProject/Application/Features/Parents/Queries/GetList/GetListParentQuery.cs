@@ -46,7 +46,7 @@ public class GetListParentQuery : IRequest<GetListResponse<GetListParentListItem
             IPaginate<Parent> parents = await _parentRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                include : p => p.Include(p => p.Student!),
+                include : p => p.Include(p => p.Students),
                 cancellationToken: cancellationToken
             );
 

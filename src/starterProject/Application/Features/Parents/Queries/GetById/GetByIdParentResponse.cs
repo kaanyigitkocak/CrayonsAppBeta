@@ -1,4 +1,6 @@
-﻿using Core.Application.Responses;
+﻿using Application.Features.Parents.Dtos;
+using Core.Application.Responses;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,7 @@ public class GetByIdParentResponse : IResponse
     public string Name { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-    public string StudentName { get; set; }
-    public DateTime StudentDateOfBirth { get; set; }
-    public string StudentClass { get; set; }
+    public IEnumerable<StudentDto> Students { get; set; }
 
 
 
@@ -24,19 +24,15 @@ public class GetByIdParentResponse : IResponse
         Name = string.Empty;
         Email = string.Empty;
         PhoneNumber = string.Empty;
-        StudentClass = string.Empty;
-        StudentName = string.Empty;
-        StudentDateOfBirth = DateTime.MinValue;
+        Students = new List<StudentDto>();
     }
 
-    public GetByIdParentResponse(int id, string name,string studentName, string studentClass, DateTime studentDateOfBirth, string phoneNumber, string email)
+    public GetByIdParentResponse(int id, string name,IEnumerable<StudentDto> students, string phoneNumber, string email)
     {
         Id = id;
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
-        StudentDateOfBirth = studentDateOfBirth;
-        StudentClass = studentClass;
-        StudentName = studentName;
+        Students = students;
     }
 }

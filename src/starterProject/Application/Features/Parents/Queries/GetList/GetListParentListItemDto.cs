@@ -1,4 +1,5 @@
-﻿using Core.Application.Dtos;
+﻿using Application.Features.Parents.Dtos;
+using Core.Application.Dtos;
 using Nest;
 using System;
 using System.Collections.Generic;
@@ -14,27 +15,24 @@ public class GetListParentListItemDto : IDto
     public string Name { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-    public string StudentName { get; set; }
-    public DateTime StudentDateOfBirth { get; set; }
-    public string StudentClass { get; set; }
+    public IEnumerable<StudentDto> Students { get; set; }
 
 
 
     public GetListParentListItemDto()
-{
-        StudentClass = string.Empty;
-        StudentName = string.Empty;
-        StudentDateOfBirth = DateTime.MinValue;
+    {
+        Name = string.Empty;
+        Email = string.Empty;
+        PhoneNumber = string.Empty;
+        Students = new List<StudentDto>();
     }
 
-public GetListParentListItemDto(int id, string name, string studentName, string studentClass, DateTime studentDateOfBirth, string phoneNumber, string email)
+    public GetListParentListItemDto(int id, string name, IEnumerable<StudentDto> students, string phoneNumber, string email)
     {
         Id = id;
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
-        StudentDateOfBirth = studentDateOfBirth;
-        StudentClass = studentClass;
-        StudentName = studentName;
+        Students = students;
     }
 }

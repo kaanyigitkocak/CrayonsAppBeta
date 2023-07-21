@@ -12,20 +12,17 @@ public class UpdatedParentResponse : IResponse
     public string Name { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-    public int StudentId { get; set; }
     public UpdatedParentResponse()
     {
         Name = string.Empty;
         Email = string.Empty;
         PhoneNumber = string.Empty;
-        StudentId = 0;
     }
 
-    public UpdatedParentResponse(int id, int studentId, string name, string phoneNumber, string email)
+    public UpdatedParentResponse(int id, string name, string phoneNumber, string email)
     {
         Id = id;
         Name = name;
-        StudentId = studentId;
         PhoneNumber = phoneNumber;
         Email = email;
     }
