@@ -15,16 +15,15 @@ public class ParentConfiguration : IEntityTypeConfiguration<Parent>
         builder.ToTable("Parents").HasKey(t => t.Id);
 
         builder.Property(t => t.Id).HasColumnName("Id").IsRequired();
-        builder.Property(t => t.StudentId).HasColumnName("StudentId");
         builder.Property(t => t.PhoneNumber).HasColumnName("PhoneNumber").IsRequired();
         builder.Property(t => t.Email).HasColumnName("Email").IsRequired();
         builder.Property(t => t.CreatedDate).HasColumnName("CreatedDate").IsRequired();
         builder.Property(t => t.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(t => t.DeletedDate).HasColumnName("DeletedDate");
 
-        builder.HasOne(t => t.Student)
+        builder.HasMany(t => t.Students)
             .WithOne(s => s.Parent)
-            .HasForeignKey<Student>(s => s.ParentId)
+            .HasForeignKey(s => s.ParentId)
             .OnDelete(DeleteBehavior.NoAction);
 
 
@@ -42,7 +41,6 @@ public class ParentConfiguration : IEntityTypeConfiguration<Parent>
             Name = "John Doe",
             Email = "john.doe@example.com",
             PhoneNumber = "123-456-7890",
-            StudentId = 1,
         };
         parents.Add(parent1);
 
@@ -52,7 +50,6 @@ public class ParentConfiguration : IEntityTypeConfiguration<Parent>
             Name = "Alice Smith",
             Email = "alice.smith@example.com",
             PhoneNumber = "987-654-3210",
-            StudentId = 2,
         };
         parents.Add(parent2);
 
