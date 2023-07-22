@@ -96,8 +96,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-if (app.Environment.IsProduction())
-    app.ConfigureCustomExceptionMiddleware();
+
+//The application is currently running in the development environment.
+//It should be activated when switching to the production environment.
+//if (app.Environment.IsProduction())
+app.ConfigureCustomExceptionMiddleware();
 
 app.UseAuthentication();
 app.UseAuthorization();

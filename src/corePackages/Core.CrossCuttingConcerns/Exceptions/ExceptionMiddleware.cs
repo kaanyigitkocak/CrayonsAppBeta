@@ -43,21 +43,28 @@ public class ExceptionMiddleware
 
     private Task LogException(HttpContext context, Exception exception)
     {
-        List<LogParameter> logParameters =
-            new()
-            {
-                new LogParameter { Type = context.GetType().Name, Value = exception.ToString() }
-            };
+        List<LogParameter> logParameters = new List<LogParameter>
+    {
+        new LogParameter { Type = context.GetType().Name, Value = exception.ToString() }
+    };
 
-        LogDetail logDetail =
-            new()
-            {
-                MethodName = _next.Method.Name,
-                Parameters = logParameters,
-                User = _contextAccessor.HttpContext?.User.Identity?.Name ?? "?"
-            };
+        
+
+        LogDetail logDetail = new LogDetail
+        {
+            MethodName = _next.Method.Name,
+            Parameters = logParameters,
+            User = _contextAccessor.HttpContext?.User.Identity?.Name ?? "?",
+            UserIpAdress = GetUserInformation(context)
+    };
 
         _loggerService.Info(JsonSerializer.Serialize(logDetail));
         return Task.CompletedTask;
+    }
+
+    private string GetUserInformation(HttpContext context)
+    {
+        string ipAddress = context.Connection.RemoteIpAddress?.ToString() ?? "?";
+        return ipAddress;
     }
 }
