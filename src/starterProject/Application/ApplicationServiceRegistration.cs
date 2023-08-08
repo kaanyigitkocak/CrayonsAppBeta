@@ -1,4 +1,4 @@
-﻿using Application.Services.AuthenticatorService;
+using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.ParentService;
 using Application.Services.SchoolService;
@@ -19,6 +19,8 @@ using Core.Mailing.MailKitImplementations;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Application.Services.ParentFeatures;
+using Application.Services.Schools;
 
 namespace Application;
 
@@ -53,6 +55,8 @@ public static class ApplicationServiceRegistration
         services.AddScoped<ISchoolService, SchoolManager>();
         services.AddScoped<IStudentService, StudentManager>();
 
+        services.AddScoped<IParentFeaturesService, ParentFeaturesManager>();
+        services.AddScoped<ISchoolsService, SchoolsManager>();
         return services;
     }
 

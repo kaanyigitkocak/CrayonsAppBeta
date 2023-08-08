@@ -24,7 +24,11 @@ public class ParentConfiguration : IEntityTypeConfiguration<Parent>
         builder.HasMany(t => t.Students)
             .WithOne(s => s.Parent)
             .HasForeignKey(s => s.ParentId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(p => p.ParentFeature)
+           .WithOne(pf => pf.Parent)
+           .HasForeignKey<ParentFeature>(pf => pf.ParentId)
+           .OnDelete(DeleteBehavior.Cascade);
 
 
         builder.HasQueryFilter(t => !t.DeletedDate.HasValue);

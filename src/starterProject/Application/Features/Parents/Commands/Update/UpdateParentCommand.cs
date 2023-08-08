@@ -44,10 +44,10 @@ public class UpdateParentCommand : IRequest<UpdatedParentResponse>
         }
         public async Task<UpdatedParentResponse> Handle(UpdateParentCommand request, CancellationToken cancellationToken)
         {
-
-            Parent parent = _mapper.Map<Parent>(request);
-            Parent updatedParent = await _parentRepository.UpdateAsync(parent);
-            UpdatedParentResponse response = _mapper.Map<UpdatedParentResponse>(updatedParent);
+            Parent? parent = await _parentRepository.GetAsync(predicate: b => b.Id == request.Id, cancellationToken: cancellationToken);
+            parent = _mapper.Map(request,parent);
+            await _parentRepository.UpdateAsync(parent);
+            UpdatedParentResponse response = _mapper.Map<UpdatedParentResponse>(parent);
             return response;
 
         }

@@ -20,10 +20,20 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
         builder.Property(t => t.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(t => t.DeletedDate).HasColumnName("DeletedDate");
 
-        builder.HasOne(t => t.School);
-        builder.HasOne(t => t.Parent);
-        builder.HasOne(t => t.Teacher);
+        builder.HasOne(t => t.School)
+            .WithMany(s => s.Students)
+            .HasForeignKey(p => p.SchoolId)
+            .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasOne(t => t.Parent)
+            .WithMany(p => p.Students)
+            .HasForeignKey(s => s.ParentId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(t => t.Teacher)
+            .WithMany(t => t.Students)
+            .HasForeignKey(p => p.TeacherId)
+            .OnDelete(DeleteBehavior.Restrict);
         builder.HasQueryFilter(t => !t.DeletedDate.HasValue);
 
         builder.HasData(GetStudentSeeds());

@@ -12,8 +12,8 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20230720195341_deneme2")]
-    partial class deneme2
+    [Migration("20230808090024_asdsaa32")]
+    partial class asdsaa32
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,78 @@ namespace Persistence.Migrations
                             Id = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "ParentFeatures.Admin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "ParentFeatures.Read"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "ParentFeatures.Write"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "ParentFeatures.Add"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "ParentFeatures.Update"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "ParentFeatures.Delete"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Schools.Admin"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Schools.Read"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Schools.Write"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Schools.Add"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Schools.Update"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Schools.Delete"
                         });
                 });
 
@@ -276,8 +348,8 @@ namespace Persistence.Migrations
                             Email = "admin@admin.com",
                             FirstName = "Admin",
                             LastName = "NArchitecture",
-                            PasswordHash = new byte[] { 128, 15, 118, 205, 135, 207, 214, 245, 176, 189, 243, 140, 109, 67, 160, 216, 233, 145, 2, 2, 223, 159, 14, 201, 28, 190, 173, 123, 29, 74, 69, 150, 209, 252, 154, 92, 82, 79, 25, 2, 151, 232, 84, 157, 118, 215, 237, 238, 129, 114, 189, 77, 169, 104, 237, 243, 237, 199, 236, 48, 4, 78, 38, 92 },
-                            PasswordSalt = new byte[] { 200, 116, 42, 9, 222, 221, 12, 151, 224, 90, 51, 196, 134, 99, 46, 119, 237, 172, 71, 15, 94, 176, 250, 214, 144, 113, 121, 159, 11, 2, 146, 73, 86, 59, 132, 127, 164, 200, 128, 197, 75, 235, 81, 125, 128, 78, 54, 209, 196, 138, 72, 144, 210, 32, 236, 238, 141, 148, 72, 150, 95, 44, 249, 212, 243, 29, 226, 155, 48, 173, 138, 113, 91, 208, 138, 193, 170, 25, 205, 141, 106, 176, 125, 113, 156, 90, 243, 234, 128, 224, 115, 156, 128, 164, 1, 39, 121, 197, 32, 138, 173, 94, 243, 159, 192, 154, 77, 19, 129, 33, 168, 246, 102, 74, 120, 5, 214, 103, 140, 27, 173, 236, 104, 139, 190, 158, 90, 160 },
+                            PasswordHash = new byte[] { 66, 23, 67, 168, 106, 137, 123, 10, 211, 122, 183, 98, 81, 116, 224, 235, 62, 6, 190, 214, 193, 149, 179, 66, 238, 28, 61, 68, 121, 69, 54, 208, 237, 108, 138, 71, 132, 159, 195, 249, 48, 176, 150, 168, 163, 156, 236, 184, 39, 6, 131, 175, 144, 212, 113, 89, 167, 136, 15, 111, 174, 52, 39, 143 },
+                            PasswordSalt = new byte[] { 99, 95, 24, 121, 35, 146, 183, 226, 9, 69, 101, 212, 210, 121, 23, 125, 73, 35, 72, 190, 186, 211, 186, 35, 14, 154, 180, 138, 154, 90, 120, 142, 73, 227, 68, 89, 124, 137, 222, 95, 211, 105, 91, 70, 174, 181, 77, 120, 186, 58, 87, 191, 30, 76, 200, 105, 177, 143, 201, 64, 69, 157, 246, 59, 50, 86, 87, 229, 160, 47, 64, 61, 66, 32, 9, 123, 231, 178, 125, 166, 33, 235, 70, 122, 253, 138, 130, 219, 195, 39, 74, 173, 169, 251, 141, 177, 154, 18, 7, 81, 189, 207, 21, 124, 34, 236, 111, 60, 43, 77, 84, 146, 206, 123, 3, 230, 21, 206, 95, 59, 96, 129, 247, 38, 19, 246, 250, 175 },
                             Status = true
                         });
                 });
@@ -360,10 +432,6 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("PhoneNumber");
 
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int")
-                        .HasColumnName("StudentId");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedDate");
@@ -379,8 +447,7 @@ namespace Persistence.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "john.doe@example.com",
                             Name = "John Doe",
-                            PhoneNumber = "123-456-7890",
-                            StudentId = 1
+                            PhoneNumber = "123-456-7890"
                         },
                         new
                         {
@@ -388,9 +455,46 @@ namespace Persistence.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "alice.smith@example.com",
                             Name = "Alice Smith",
-                            PhoneNumber = "987-654-3210",
-                            StudentId = 2
+                            PhoneNumber = "987-654-3210"
                         });
+                });
+
+            modelBuilder.Entity("Domain.Entities.ParentFeature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<string>("FeatureName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FeatureName");
+
+                    b.Property<int>("ParentId")
+                        .HasColumnType("int")
+                        .HasColumnName("ParentId");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId")
+                        .IsUnique();
+
+                    b.ToTable("ParentFeatures", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.School", b =>
@@ -417,7 +521,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -437,17 +542,17 @@ namespace Persistence.Migrations
                         {
                             Id = 1,
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Example School",
-                            PhoneNumber = "555-123-4567"
+                            CreatedDate = new DateTime(2023, 8, 8, 12, 0, 24, 785, DateTimeKind.Local).AddTicks(1199),
+                            Name = "Sample School 1",
+                            PhoneNumber = "555-1234"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "456 Elm Ave",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Another School",
-                            PhoneNumber = "555-987-6543"
+                            Address = "1234 Main St",
+                            CreatedDate = new DateTime(2023, 8, 8, 12, 0, 24, 785, DateTimeKind.Local).AddTicks(1212),
+                            Name = "Sample School 2",
+                            PhoneNumber = "555-12342"
                         });
                 });
 
@@ -499,8 +604,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId")
-                        .IsUnique();
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("SchoolId");
 
@@ -657,24 +761,35 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ParentFeature", b =>
+                {
+                    b.HasOne("Domain.Entities.Parent", "Parent")
+                        .WithOne("ParentFeature")
+                        .HasForeignKey("Domain.Entities.ParentFeature", "ParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("Domain.Entities.Student", b =>
                 {
                     b.HasOne("Domain.Entities.Parent", "Parent")
-                        .WithOne("Student")
-                        .HasForeignKey("Domain.Entities.Student", "ParentId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .WithMany("Students")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.School", "School")
                         .WithMany("Students")
                         .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Teacher", "Teacher")
                         .WithMany("Students")
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Parent");
@@ -689,7 +804,7 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entities.School", "School")
                         .WithMany("Teachers")
                         .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("School");
@@ -713,7 +828,10 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Parent", b =>
                 {
-                    b.Navigation("Student");
+                    b.Navigation("ParentFeature")
+                        .IsRequired();
+
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("Domain.Entities.School", b =>

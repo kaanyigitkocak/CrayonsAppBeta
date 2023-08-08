@@ -19,11 +19,15 @@ public class TeacherConfiguration : IEntityTypeConfiguration<Teacher>
         builder.Property(t => t.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(t => t.DeletedDate).HasColumnName("DeletedDate");
 
-        builder.HasOne(t => t.School);
+        builder.HasOne(t => t.School)
+            .WithMany(s => s.Teachers)
+            .HasForeignKey(p => p.SchoolId)
+            .OnDelete(DeleteBehavior.Cascade); // Change to Cascade
+
         builder.HasMany(t => t.Students)
             .WithOne(s => s.Teacher)
-            .HasForeignKey(s => s.TeacherId).OnDelete(DeleteBehavior.NoAction);
-
+            .HasForeignKey(s => s.TeacherId)
+            .OnDelete(DeleteBehavior.Cascade); // Change to Restrict
 
         builder.HasQueryFilter(t => !t.DeletedDate.HasValue);
         builder.HasData(GetTeacherSeeds());

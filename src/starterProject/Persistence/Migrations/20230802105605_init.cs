@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class deneme : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +38,6 @@ namespace Persistence.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -262,11 +261,11 @@ namespace Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "Parents",
-                columns: new[] { "Id", "CreatedDate", "DeletedDate", "Email", "Name", "PhoneNumber", "StudentId", "UpdatedDate" },
+                columns: new[] { "Id", "CreatedDate", "DeletedDate", "Email", "Name", "PhoneNumber", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "john.doe@example.com", "John Doe", "123-456-7890", 1, null },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "alice.smith@example.com", "Alice Smith", "987-654-3210", 2, null }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "john.doe@example.com", "John Doe", "123-456-7890", null },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "alice.smith@example.com", "Alice Smith", "987-654-3210", null }
                 });
 
             migrationBuilder.InsertData(
@@ -281,7 +280,7 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AuthenticatorType", "CreatedDate", "DeletedDate", "Email", "FirstName", "LastName", "PasswordHash", "PasswordSalt", "Status", "UpdatedDate" },
-                values: new object[] { 1, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "admin@admin.com", "Admin", "NArchitecture", new byte[] { 78, 235, 85, 22, 140, 180, 10, 164, 77, 108, 6, 98, 218, 76, 212, 203, 137, 201, 58, 238, 140, 230, 225, 67, 170, 185, 180, 87, 225, 210, 12, 69, 236, 78, 50, 172, 189, 48, 223, 202, 177, 11, 60, 6, 165, 10, 243, 9, 128, 220, 230, 211, 21, 185, 102, 25, 82, 3, 85, 115, 111, 141, 153, 216 }, new byte[] { 61, 244, 54, 165, 9, 38, 175, 186, 158, 65, 219, 40, 113, 130, 173, 78, 104, 197, 47, 175, 15, 221, 189, 225, 138, 58, 6, 50, 244, 46, 170, 79, 64, 62, 122, 180, 69, 185, 251, 44, 106, 64, 205, 71, 163, 69, 94, 239, 234, 165, 109, 133, 50, 163, 25, 179, 116, 103, 32, 96, 84, 22, 120, 190, 191, 149, 78, 142, 218, 53, 159, 220, 101, 20, 144, 171, 252, 31, 207, 37, 48, 114, 203, 227, 71, 94, 101, 53, 228, 207, 111, 235, 139, 163, 181, 126, 67, 3, 219, 72, 55, 117, 6, 31, 200, 215, 26, 151, 75, 62, 221, 119, 255, 132, 246, 98, 213, 183, 24, 109, 240, 40, 59, 164, 102, 39, 249, 161 }, true, null });
+                values: new object[] { 1, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "admin@admin.com", "Admin", "NArchitecture", new byte[] { 235, 78, 24, 90, 61, 26, 150, 0, 187, 51, 62, 221, 129, 96, 23, 5, 226, 147, 197, 106, 212, 37, 62, 112, 243, 79, 3, 213, 23, 124, 31, 52, 65, 42, 44, 50, 226, 5, 93, 163, 68, 104, 72, 130, 173, 160, 224, 213, 149, 161, 129, 139, 78, 106, 4, 180, 249, 251, 154, 10, 217, 0, 61, 41 }, new byte[] { 172, 61, 102, 162, 15, 80, 71, 239, 235, 80, 74, 250, 83, 235, 112, 136, 179, 180, 233, 177, 118, 226, 72, 150, 85, 198, 105, 129, 122, 180, 212, 27, 45, 92, 160, 242, 243, 82, 102, 86, 100, 204, 82, 248, 198, 255, 125, 158, 239, 246, 31, 13, 35, 98, 26, 111, 136, 245, 184, 242, 61, 15, 237, 207, 76, 102, 231, 229, 65, 101, 84, 143, 185, 57, 112, 113, 156, 77, 65, 7, 206, 159, 225, 79, 87, 88, 153, 227, 115, 107, 52, 236, 214, 67, 2, 143, 159, 175, 31, 193, 218, 83, 246, 3, 219, 255, 173, 117, 204, 187, 16, 227, 113, 155, 113, 64, 205, 167, 103, 215, 174, 232, 163, 194, 197, 157, 243, 59 }, true, null });
 
             migrationBuilder.InsertData(
                 table: "Teachers",
@@ -324,8 +323,7 @@ namespace Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Students_ParentId",
                 table: "Students",
-                column: "ParentId",
-                unique: true);
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_SchoolId",

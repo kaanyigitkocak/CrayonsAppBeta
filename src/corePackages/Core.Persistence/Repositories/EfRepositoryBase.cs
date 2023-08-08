@@ -40,33 +40,24 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
         return entities;
     }
 
+
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
-        
-        TEntity? existingEntity = await Context.Set<TEntity>().FindAsync(entity.Id);
-        if (existingEntity == null)
-        {
-            throw new NotFoundException("Entity does not exist in db ");
-        }
         entity.UpdatedDate = DateTime.UtcNow;
-        entity.CreatedDate = existingEntity.CreatedDate;
-
-        PropertyInfo[] properties = typeof(TEntity).GetProperties();
-        foreach (PropertyInfo property in properties)
+        Context.Update(entity);
+        await Context.SaveChangesAsync();
+        return entity;
+    }
+    static bool IsEmptyString(object obj)   
+    {
+        Type type = obj.GetType();
+        if (type == typeof(string))
         {
-            object newValue = property.GetValue(entity)!;
-            object existingValue = property.GetValue(existingEntity)!;
-
-            if (newValue != null && !newValue.Equals(existingValue))
-            {
-                property.SetValue(existingEntity, newValue);
-            }
+            return string.IsNullOrEmpty((string)obj);
         }
 
-        await Context.SaveChangesAsync();
-        return existingEntity;
+        return false;
     }
-
     public async Task<ICollection<TEntity>> UpdateRangeAsync(ICollection<TEntity> entities)
     {
         foreach (TEntity entity in entities)

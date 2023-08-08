@@ -7,7 +7,7 @@ public class Parent : Entity<int>
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public virtual ICollection<Student> Students { get; set; }
-
+    public ParentFeature ParentFeature { get; set; }
     public Parent()
     {
         Students = new HashSet<Student>();
