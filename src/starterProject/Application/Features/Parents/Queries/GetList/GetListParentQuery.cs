@@ -1,6 +1,8 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Performance;
 using Core.Application.Pipelines.Timeout;
+using Core.Application.Pipelines.Transaction;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -14,11 +16,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Features.Parents.Queries.GetList;
-public class GetListParentQuery : IRequest<GetListResponse<GetListParentListItemDto>>, ITimeoutRequest
+public class GetListParentQuery : IRequest<GetListResponse<GetListParentListItemDto>>, ITimeoutRequest, IIntervalRequest, ITransactionalRequest
 {
     public PageRequest PageRequest { get; set; }
 
     public TimeSpan TimeoutTime => TimeSpan.FromMilliseconds(3000);
+
+    public int Interval => 1;
 
     public GetListParentQuery()
     {

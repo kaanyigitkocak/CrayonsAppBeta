@@ -11,21 +11,24 @@ public class TimeoutBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
 {
    
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
-        
     {
-        using var cts = new CancellationTokenSource();
-        var combinedCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, cts.Token);
-
-        var response = Task.Run(() => next(), combinedCancellationToken.Token);
-
-        if (await Task.WhenAny(response, Task.Delay(request.TimeoutTime , combinedCancellationToken.Token)) == response)
+        Task<TResponse> response;
+        using (CancellationTokenSource cts = new CancellationTokenSource())
         {
-            cts.Cancel();
-            return await response;
-        }
-        else
-        {
-            throw new TimeoutException($"Request exceeded {request.TimeoutTime.TotalSeconds} seconds.");
+            CancellationToken combinedCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, cts.Token).Token;
+            response = Task.Run(() => next(), combinedCancellationToken);
+
+            
+            if (await Task.WhenAny(response, Task.Delay(request.TimeoutTime, combinedCancellationToken)) == response)
+            {
+                cts.Cancel();
+                return await response;
+            }
+            else
+            {
+                throw new TimeoutException($"Request exceeded {request.TimeoutTime.TotalSeconds} seconds.");
+            }
         }
     }
+    
 }
