@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Timeout;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -13,9 +14,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Features.Parents.Queries.GetList;
-public class GetListParentQuery : IRequest<GetListResponse<GetListParentListItemDto>>
+public class GetListParentQuery : IRequest<GetListResponse<GetListParentListItemDto>>, ITimeoutRequest
 {
     public PageRequest PageRequest { get; set; }
+
+    public TimeSpan TimeoutTime => TimeSpan.FromMilliseconds(3000);
 
     public GetListParentQuery()
     {
@@ -43,6 +46,7 @@ public class GetListParentQuery : IRequest<GetListResponse<GetListParentListItem
 
         public async Task<GetListResponse<GetListParentListItemDto>> Handle(GetListParentQuery request, CancellationToken cancellationToken)
         {
+            await Task.Delay(3001);
             IPaginate<Parent> parents = await _parentRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,

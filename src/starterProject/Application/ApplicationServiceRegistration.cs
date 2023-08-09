@@ -21,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Application.Services.ParentFeatures;
 using Application.Services.Schools;
+using Core.Application.Pipelines.Timeout;
 
 namespace Application;
 
@@ -38,6 +39,7 @@ public static class ApplicationServiceRegistration
             configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
             configuration.AddOpenBehavior(typeof(RequestValidationBehavior<,>));
             configuration.AddOpenBehavior(typeof(TransactionScopeBehavior<,>));
+            configuration.AddOpenBehavior(typeof(TimeoutBehavior<,>));
         });
 
         services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
