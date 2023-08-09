@@ -16,12 +16,12 @@ public class TimeoutBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         using var cts = new CancellationTokenSource();
         var combinedCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, cts.Token);
 
-        var task = Task.Run(() => next(), combinedCancellationToken.Token);
+        var response = Task.Run(() => next(), combinedCancellationToken.Token);
 
-        if (await Task.WhenAny(task, Task.Delay(request.TimeoutTime , combinedCancellationToken.Token)) == task)
+        if (await Task.WhenAny(response, Task.Delay(request.TimeoutTime , combinedCancellationToken.Token)) == response)
         {
             cts.Cancel();
-            return await task;
+            return await response;
         }
         else
         {
