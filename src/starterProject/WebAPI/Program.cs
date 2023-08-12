@@ -4,7 +4,7 @@ using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
 using Core.WebAPI.Extensions.Swagger;
-using Infrastructure;
+using Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.IdentityModel.Tokens;

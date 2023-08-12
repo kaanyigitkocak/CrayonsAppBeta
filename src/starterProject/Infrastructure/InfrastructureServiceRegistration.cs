@@ -1,8 +1,8 @@
 ﻿using Application.Services.ImageService;
-using Infrastructure.Adapters.ImageService;
+using Application.Adapters.ImageService;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure;
+namespace Application;
 
 public static class InfrastructureServiceRegistration
 {

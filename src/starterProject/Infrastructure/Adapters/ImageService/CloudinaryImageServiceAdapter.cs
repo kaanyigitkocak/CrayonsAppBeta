@@ -4,7 +4,7 @@ using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.Adapters.ImageService;
+namespace Application.Adapters.ImageService;
 
 public class CloudinaryImageServiceAdapter : ImageServiceBase
 {
