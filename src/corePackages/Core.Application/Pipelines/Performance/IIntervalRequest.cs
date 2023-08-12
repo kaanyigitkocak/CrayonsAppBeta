@@ -2,5 +2,5 @@
 
 public interface IIntervalRequest
 {
-    public int Interval { get; }
+    public TimeSpan Interval { get; }
 }

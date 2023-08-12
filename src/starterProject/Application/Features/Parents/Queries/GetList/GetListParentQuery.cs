@@ -22,7 +22,7 @@ public class GetListParentQuery : IRequest<GetListResponse<GetListParentListItem
 
     public TimeSpan TimeoutTime => TimeSpan.FromMilliseconds(3000);
 
-    public int Interval => 1;
+    public TimeSpan Interval => TimeSpan.FromMilliseconds(3000);
 
     public GetListParentQuery()
     {

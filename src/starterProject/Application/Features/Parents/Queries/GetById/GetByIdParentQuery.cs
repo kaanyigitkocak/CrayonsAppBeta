@@ -1,4 +1,5 @@
 ﻿using Application.Features.Parents.Rules;
+using Application.Notifications.Mails;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -20,16 +21,19 @@ public class GetByIdParentQuery : IRequest<GetByIdParentResponse>
         private readonly IParentRepository _parentRepository;
         private readonly IMapper _mapper;
         private readonly ParentBusinessRules _parentBusinessRules;
-
-        public GetByIdParentQueryHandler(IParentRepository parentRepository, IMapper mapper, ParentBusinessRules parentBusinessRules)
+        private readonly IMediator _mediator;
+        public GetByIdParentQueryHandler(IParentRepository parentRepository, IMapper mapper, ParentBusinessRules parentBusinessRules, IMediator mediator)
         {
             _parentRepository = parentRepository;
             _mapper = mapper;
             _parentBusinessRules = parentBusinessRules;
+            _mediator = mediator;
         }
 
         public async Task<GetByIdParentResponse> Handle(GetByIdParentQuery request, CancellationToken cancellationToken)
         {
+            await _mediator.Publish(new MailNotification("selam", "naber") , cancellationToken);
+
             Parent? parent = await _parentRepository.GetAsync(predicate: b => b.Id == request.Id,
                                                               include: p => p.Include(p => p.Students),
                                                               cancellationToken: cancellationToken);
