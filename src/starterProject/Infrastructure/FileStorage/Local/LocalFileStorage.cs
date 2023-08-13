@@ -29,7 +29,7 @@ namespace Infrastructure.FileStorage.Local
                 throw new NotImplementedException();
             }
 
-            var uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", DateTime.Now.ToString("yyyyMMdd"));
+            var uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
             Directory.CreateDirectory(uploadsPath);
 
             var uniqueFileName = Guid.NewGuid().ToString()+ file.FileName.GetSubstringFile();
@@ -48,17 +48,17 @@ namespace Infrastructure.FileStorage.Local
         {
             var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
 
-            if (!FileSys.Exists(fullPath))
+            if (!System.IO.File.Exists(filePath))
             {
-                return new NotFoundResult();
+                throw new FileNotFoundException();
             }
 
-            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-            {
-                var contentType = MimeTypes.GetMimeType(filePath);
+            var contentType = MimeTypes.GetMimeType(filePath.GetSubstringFile());
 
-                return new FileStreamResult(fileStream, contentType);
-            }
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            
+            return new FileStreamResult(fileStream, contentType);
+            
         }
 
         public async Task<string> Update(string fullPath, IFormFile newFile)

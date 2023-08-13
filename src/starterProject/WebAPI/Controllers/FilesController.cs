@@ -5,7 +5,10 @@ using Application.Features.Files.Queries.GetById;
 using Application.Features.Files.Queries.GetList;
 using Core.Application.Requests;
 using Core.Application.Responses;
+using Core.CrossCuttingConcerns.Extensions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 
 namespace WebAPI.Controllers;
 
@@ -13,6 +16,13 @@ namespace WebAPI.Controllers;
 [ApiController]
 public class FilesController : BaseController
 {
+    private readonly IWebHostEnvironment _webHostEnvironment;
+
+    public FilesController(IWebHostEnvironment webHostEnvironment)
+    {
+        _webHostEnvironment = webHostEnvironment;
+    }
+
     [HttpPost]
     public async Task<IActionResult> Add( IFormFile formFile)
     { 
@@ -26,8 +36,9 @@ public class FilesController : BaseController
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateFileCommand updateFileCommand)
+    public async Task<IActionResult> Update( IFormFile formFile,string fullPath)
     {
+        UpdateFileCommand updateFileCommand = new() { FullPath = fullPath, File = formFile };
         UpdatedFileResponse response = await Mediator.Send(updateFileCommand);
 
         return Ok(response);
@@ -41,18 +52,22 @@ public class FilesController : BaseController
         return Ok(response);
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById([FromRoute] int id)
+    [HttpGet]
+    public async Task<IActionResult> GetById(string fullPath)
     {
-        GetByIdFileResponse response = await Mediator.Send(new GetByIdFileQuery { Id = id });
-        return Ok(response);
+        var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
+
+        if (!System.IO.File.Exists(filePath))
+        {
+            throw new FileNotFoundException();
+        }
+
+        var contentType = MimeTypes.GetMimeType(filePath.GetSubstringFile());
+
+        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+        return new FileStreamResult(fileStream, contentType);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
-    {
-        GetListFileQuery getListFileQuery = new() { PageRequest = pageRequest };
-        GetListResponse<GetListFileListItemDto> response = await Mediator.Send(getListFileQuery);
-        return Ok(response);
-    }
+  
 }
