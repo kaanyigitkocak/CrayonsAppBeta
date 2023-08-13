@@ -14,6 +14,8 @@ public class Student : Entity<int>
     public int TeacherId { get; set; }
     public int ParentId { get; set; }
     public int SchoolId { get; set; }
+    public int FileId { get; set; }
+    public virtual File? File { get; set; }
 
     public virtual Parent? Parent { get; set; }
     public virtual School? School { get; set; }

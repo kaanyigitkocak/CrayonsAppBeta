@@ -2,6 +2,7 @@
 using Application.Features.Parents.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -41,6 +42,11 @@ public class DeleteParentCommand : IRequest<DeletedParentResponse>
         public async Task<DeletedParentResponse> Handle(DeleteParentCommand request, CancellationToken cancellationToken)
         {
             Parent? parent = await _parentRepository.GetAsync(predicate: p => p.Id == request.Id, cancellationToken: cancellationToken);
+            if (parent.Students == null)
+            {
+                throw new BusinessException("deger null " + parent.Students.ToString());
+            }
+            throw new BusinessException(parent.Students.ToString());
             await _parentRepository.DeleteAsync(parent!);
             DeletedParentResponse response = _mapper.Map<DeletedParentResponse>(parent);
             return response;

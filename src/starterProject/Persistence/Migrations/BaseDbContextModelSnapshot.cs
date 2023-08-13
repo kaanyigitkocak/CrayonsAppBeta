@@ -170,6 +170,78 @@ namespace Persistence.Migrations
                             Id = 13,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Schools.Delete"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Invoices.Admin"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Invoices.Read"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Invoices.Write"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Invoices.Add"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Invoices.Update"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Invoices.Delete"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Files.Admin"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Files.Read"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Files.Write"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Files.Add"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Files.Update"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Files.Delete"
                         });
                 });
 
@@ -345,8 +417,8 @@ namespace Persistence.Migrations
                             Email = "admin@admin.com",
                             FirstName = "Admin",
                             LastName = "NArchitecture",
-                            PasswordHash = new byte[] { 34, 12, 95, 101, 210, 198, 132, 24, 201, 92, 128, 123, 28, 93, 172, 218, 129, 215, 186, 237, 136, 209, 85, 169, 109, 169, 237, 65, 88, 84, 209, 161, 57, 28, 237, 154, 169, 236, 51, 73, 245, 166, 36, 130, 64, 36, 89, 81, 43, 54, 188, 118, 83, 121, 0, 212, 252, 25, 32, 241, 255, 54, 124, 48 },
-                            PasswordSalt = new byte[] { 105, 11, 166, 212, 3, 125, 28, 137, 173, 197, 87, 254, 66, 84, 66, 109, 64, 112, 11, 44, 238, 48, 146, 242, 141, 46, 38, 223, 169, 190, 245, 250, 139, 200, 30, 56, 46, 8, 2, 153, 6, 178, 143, 174, 253, 57, 109, 126, 122, 198, 199, 21, 100, 99, 91, 209, 119, 178, 230, 170, 228, 36, 162, 47, 5, 74, 101, 18, 37, 190, 20, 154, 88, 254, 46, 201, 39, 85, 8, 164, 42, 243, 89, 252, 181, 248, 35, 144, 68, 182, 76, 175, 39, 181, 161, 53, 155, 162, 10, 99, 99, 28, 99, 139, 218, 181, 28, 58, 109, 139, 14, 173, 24, 16, 138, 206, 38, 186, 180, 121, 110, 163, 218, 170, 54, 43, 185, 248 },
+                            PasswordHash = new byte[] { 197, 124, 130, 30, 221, 111, 84, 82, 202, 223, 61, 134, 52, 228, 192, 78, 189, 114, 136, 61, 26, 231, 141, 100, 39, 192, 64, 140, 223, 124, 185, 67, 30, 163, 189, 84, 11, 68, 190, 41, 122, 194, 12, 220, 248, 84, 182, 32, 255, 188, 127, 28, 46, 66, 7, 113, 194, 32, 0, 167, 179, 85, 170, 235 },
+                            PasswordSalt = new byte[] { 245, 137, 41, 95, 122, 156, 67, 147, 178, 34, 211, 189, 228, 82, 25, 183, 18, 49, 191, 44, 40, 250, 65, 142, 219, 112, 1, 10, 11, 52, 242, 231, 38, 65, 11, 31, 112, 125, 27, 52, 121, 24, 207, 162, 212, 220, 51, 14, 98, 185, 100, 155, 153, 220, 121, 229, 61, 210, 94, 22, 246, 129, 231, 48, 0, 117, 180, 233, 76, 184, 26, 241, 36, 148, 78, 56, 179, 54, 59, 234, 172, 212, 126, 212, 192, 51, 114, 21, 1, 242, 43, 49, 116, 57, 185, 153, 116, 166, 210, 115, 112, 124, 89, 252, 224, 87, 50, 65, 131, 162, 152, 50, 3, 13, 1, 60, 121, 234, 222, 71, 172, 57, 48, 191, 159, 47, 10, 10 },
                             Status = true
                         });
                 });
@@ -396,6 +468,102 @@ namespace Persistence.Migrations
                             OperationClaimId = 1,
                             UserId = 1
                         });
+                });
+
+            modelBuilder.Entity("Domain.Entities.File", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullPath")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("MimeType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<string>("Detail")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FileId")
+                        .HasColumnType("int")
+                        .HasColumnName("FileId");
+
+                    b.Property<string>("InvoiceNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ParentId")
+                        .HasColumnType("int")
+                        .HasColumnName("ParentId");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileId")
+                        .IsUnique();
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Invoices", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Parent", b =>
@@ -539,7 +707,7 @@ namespace Persistence.Migrations
                         {
                             Id = 1,
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2023, 8, 8, 12, 37, 5, 50, DateTimeKind.Local).AddTicks(1809),
+                            CreatedDate = new DateTime(2023, 8, 13, 11, 12, 21, 231, DateTimeKind.Local).AddTicks(7581),
                             Name = "Sample School 1",
                             PhoneNumber = "555-1234"
                         },
@@ -547,7 +715,7 @@ namespace Persistence.Migrations
                         {
                             Id = 2,
                             Address = "1234 Main St",
-                            CreatedDate = new DateTime(2023, 8, 8, 12, 37, 5, 50, DateTimeKind.Local).AddTicks(1821),
+                            CreatedDate = new DateTime(2023, 8, 13, 11, 12, 21, 231, DateTimeKind.Local).AddTicks(7595),
                             Name = "Sample School 2",
                             PhoneNumber = "555-12342"
                         });
@@ -579,6 +747,10 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletedDate");
 
+                    b.Property<int>("FileId")
+                        .HasColumnType("int")
+                        .HasColumnName("FileId");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -601,6 +773,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FileId")
+                        .IsUnique();
+
                     b.HasIndex("ParentId");
 
                     b.HasIndex("SchoolId");
@@ -608,30 +783,6 @@ namespace Persistence.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Students", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Class = "Grade 10",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(2005, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Jane Doe",
-                            ParentId = 1,
-                            SchoolId = 1,
-                            TeacherId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Class = "Grade 8",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(2006, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Bob Johnson",
-                            ParentId = 2,
-                            SchoolId = 2,
-                            TeacherId = 2
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Teacher", b =>
@@ -758,6 +909,25 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Invoice", b =>
+                {
+                    b.HasOne("Domain.Entities.File", "File")
+                        .WithOne("Invoice")
+                        .HasForeignKey("Domain.Entities.Invoice", "FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Parent", "Parent")
+                        .WithMany("Invoices")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("File");
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("Domain.Entities.ParentFeature", b =>
                 {
                     b.HasOne("Domain.Entities.Parent", "Parent")
@@ -771,6 +941,12 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Student", b =>
                 {
+                    b.HasOne("Domain.Entities.File", "File")
+                        .WithOne("Student")
+                        .HasForeignKey("Domain.Entities.Student", "FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.Parent", "Parent")
                         .WithMany("Students")
                         .HasForeignKey("ParentId")
@@ -788,6 +964,8 @@ namespace Persistence.Migrations
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("File");
 
                     b.Navigation("Parent");
 
@@ -823,8 +1001,19 @@ namespace Persistence.Migrations
                     b.Navigation("UserOperationClaims");
                 });
 
+            modelBuilder.Entity("Domain.Entities.File", b =>
+                {
+                    b.Navigation("Invoice")
+                        .IsRequired();
+
+                    b.Navigation("Student")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.Parent", b =>
                 {
+                    b.Navigation("Invoices");
+
                     b.Navigation("ParentFeature")
                         .IsRequired();
 

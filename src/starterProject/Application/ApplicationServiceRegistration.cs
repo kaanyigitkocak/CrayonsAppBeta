@@ -22,6 +22,8 @@ using System.Reflection;
 using Application.Services.ParentFeatures;
 using Application.Services.Schools;
 using Core.Application.Pipelines.Timeout;
+using Application.Services.Invoices;
+using Application.Services.Files;
 
 namespace Application;
 
@@ -59,6 +61,8 @@ public static class ApplicationServiceRegistration
 
         services.AddScoped<IParentFeaturesService, ParentFeaturesManager>();
         services.AddScoped<ISchoolsService, SchoolsManager>();
+        services.AddScoped<IInvoicesService, InvoicesManager>();
+        services.AddScoped<IFilesService, FilesManager>();
         return services;
     }
 

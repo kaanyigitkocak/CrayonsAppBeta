@@ -27,6 +27,8 @@ public static class PersistenceServiceRegistration
 
         services.AddScoped<IParentFeatureRepository, ParentFeatureRepository>();
         services.AddScoped<ISchoolRepository, SchoolRepository>();
+        services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+        services.AddScoped<IFileRepository, FileRepository>();
         return services;
     }
 }

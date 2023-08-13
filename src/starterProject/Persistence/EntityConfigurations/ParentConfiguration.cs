@@ -25,6 +25,10 @@ public class ParentConfiguration : IEntityTypeConfiguration<Parent>
             .WithOne(s => s.Parent)
             .HasForeignKey(s => s.ParentId)
             .OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(t => t.Invoices)
+            .WithOne(s => s.Parent)
+            .HasForeignKey(s => s.ParentId)
+            .OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(p => p.ParentFeature)
            .WithOne(pf => pf.Parent)
            .HasForeignKey<ParentFeature>(pf => pf.ParentId)

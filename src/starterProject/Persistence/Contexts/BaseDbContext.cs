@@ -3,6 +3,7 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using File = Domain.Entities.File;
 
 namespace Persistence.Contexts;
 
@@ -13,6 +14,8 @@ public class BaseDbContext : DbContext
     public DbSet<School> Schools { get; set; }
     public DbSet<Parent> Parents { get; set; }
     public DbSet<Student> Students { get; set; }
+    public DbSet<File> Files { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
     public DbSet<EmailAuthenticator> EmailAuthenticators { get; set; }
     public DbSet<OperationClaim> OperationClaims { get; set; }
     public DbSet<OtpAuthenticator> OtpAuthenticators { get; set; }
