@@ -1,5 +1,6 @@
 using Application.Features.Files.Constants;
 using Application.Features.Files.Rules;
+using Application.Services.FileStorageService;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -15,13 +16,15 @@ public class DeleteFileCommand : IRequest<DeletedFileResponse>
 
     public class DeleteFileCommandHandler : IRequestHandler<DeleteFileCommand, DeletedFileResponse>
     {
+
+        private readonly IFileStorage _fileStorage;
         private readonly IMapper _mapper;
         private readonly IFileRepository _fileRepository;
         private readonly FileBusinessRules _fileBusinessRules;
 
-        public DeleteFileCommandHandler(IMapper mapper, IFileRepository fileRepository,
-                                         FileBusinessRules fileBusinessRules)
+        public DeleteFileCommandHandler(IFileStorage fileStorage, IMapper mapper, IFileRepository fileRepository, FileBusinessRules fileBusinessRules)
         {
+            _fileStorage = fileStorage;
             _mapper = mapper;
             _fileRepository = fileRepository;
             _fileBusinessRules = fileBusinessRules;
@@ -33,6 +36,7 @@ public class DeleteFileCommand : IRequest<DeletedFileResponse>
             await _fileBusinessRules.FileShouldExistWhenSelected(file);
 
             await _fileRepository.DeleteAsync(file!);
+            await _fileStorage.Delete(file!.FullPath);
 
             DeletedFileResponse response = _mapper.Map<DeletedFileResponse>(file);
             return response;

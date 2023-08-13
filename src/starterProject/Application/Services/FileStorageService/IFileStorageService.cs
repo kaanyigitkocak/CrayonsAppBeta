@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using File = Domain.Entities.File;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Services.FileStorageService;
-public interface IFileStorage
+public interface IFileStorageService
 {
     Task<IActionResult> Upload(IFormFile file);
     Task<IActionResult> Download(string fullPath);

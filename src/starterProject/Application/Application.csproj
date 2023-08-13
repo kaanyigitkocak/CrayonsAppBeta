@@ -18,7 +18,6 @@
   <ItemGroup>
     <Folder Include="Features\Parents\Constants\" />
     <Folder Include="Features\Students\Constants\" />
-    <Folder Include="NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

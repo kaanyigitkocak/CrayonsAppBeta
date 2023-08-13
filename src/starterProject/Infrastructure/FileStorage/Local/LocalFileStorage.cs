@@ -2,10 +2,14 @@
 using System.IO;
 using System.Threading.Tasks;
 using Application.Services.FileStorageService;
+using Core.CrossCuttingConcerns.Exceptions.Types;
+using Core.CrossCuttingConcerns.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using File = Domain.Entities.File;
+using FileSys = System.IO.File;
 
 namespace Infrastructure.FileStorage.Local
 {
@@ -18,17 +22,17 @@ namespace Infrastructure.FileStorage.Local
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<IActionResult> Upload(IFormFile file)
+        public async Task<string> Upload(IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
-                return new BadRequestResult();
+                throw new NotImplementedException();
             }
 
-            var uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            var uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", DateTime.Now.ToString("yyyyMMdd"));
             Directory.CreateDirectory(uploadsPath);
 
-            var uniqueFileName = Guid.NewGuid().ToString();
+            var uniqueFileName = Guid.NewGuid().ToString()+ file.FileName.GetSubstringFile();
             var filePath = Path.Combine(uploadsPath, uniqueFileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
@@ -36,7 +40,7 @@ namespace Infrastructure.FileStorage.Local
                 await file.CopyToAsync(stream);
             }
 
-            return new OkObjectResult(uniqueFileName);
+            return uniqueFileName;
         }
 
 
@@ -44,27 +48,29 @@ namespace Infrastructure.FileStorage.Local
         {
             var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
 
-            if (!System.IO.File.Exists(fullPath))
+            if (!FileSys.Exists(fullPath))
             {
                 return new NotFoundResult();
             }
 
             using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
-                return new FileStreamResult(fileStream, "image/jpeg");
+                var contentType = MimeTypes.GetMimeType(filePath);
+
+                return new FileStreamResult(fileStream, contentType);
             }
         }
 
-        public async Task<IActionResult> Update(string fullPath, IFormFile newFile)
+        public async Task<string> Update(string fullPath, IFormFile newFile)
         {
             var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
 
-            if (!System.IO.File.Exists(filePath))
+            if (!FileSys.Exists(filePath))
             {
-                return new NotFoundResult();
+                throw new NotFoundException("File doesnt exist");                
             }
 
-            System.IO.File.Delete(filePath);
+            FileSys.Delete(filePath);
 
             if (newFile != null && newFile.Length > 0)
             {
@@ -78,41 +84,26 @@ namespace Infrastructure.FileStorage.Local
                     await newFile.CopyToAsync(stream);
                 }
 
-                return new OkObjectResult(fullPath);
+                return fullPath;
             }
 
-            return new BadRequestResult(); 
+            throw new NotImplementedException();
         }
 
-        public async Task<IActionResult> Delete(string fullPath)
+        public async Task<string> Delete(string fullPath)
         {
             var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
 
-            if (!System.IO.File.Exists(filePath))
+            if (!FileSys.Exists(filePath))
             {
-                return new NotFoundResult();
+                throw new NotFoundException();
             }
 
-            System.IO.File.Delete(filePath);
+            FileSys.Delete(filePath);
 
-            return new OkResult();
+            return fullPath;
         }
-        public string GetSubstringFile(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return string.Empty;
-            }
-
-            int dotIndex = input.IndexOf('.');
-
-            if (dotIndex == -1 || dotIndex == input.Length - 1)
-            {
-                return string.Empty;
-            }
-
-            return input.Substring(dotIndex);
-        }
+        
 
     }
 }
