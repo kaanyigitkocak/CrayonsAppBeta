@@ -5,15 +5,16 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Crypto.Modes;
 using File = Domain.Entities.File;
 
 namespace Application.Features.Files.Queries.GetById;
 
-public class GetByIdFileQuery : IRequest<GetByIdFileResponse>
+public class GetByIdFileQuery : IRequest<IActionResult>
 {
     public string FullPath { get; set; }
 
-    public class GetByIdFileQueryHandler : IRequestHandler<GetByIdFileQuery, GetByIdFileResponse>
+    public class GetByIdFileQueryHandler : IRequestHandler<GetByIdFileQuery, IActionResult>
     {
         private readonly IFileStorage _fileStorage;
         private readonly IMapper _mapper;
@@ -28,12 +29,14 @@ public class GetByIdFileQuery : IRequest<GetByIdFileResponse>
             _fileBusinessRules = fileBusinessRules;
         }
 
-        public async Task<GetByIdFileResponse> Handle(GetByIdFileQuery request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Handle(GetByIdFileQuery request, CancellationToken cancellationToken)
         {
             File? file = await _fileRepository.GetAsync(predicate: f => f.FullPath == request.FullPath, cancellationToken: cancellationToken);
             IActionResult fileResult = await _fileStorage.Download(request.FullPath);
 
-            return new GetByIdFileResponse() { Result = fileResult};
+            return await _fileStorage.Download(request.FullPath);
+
+
         }
     }
 }

@@ -56,7 +56,7 @@ public class FilesController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetById(string fullPath)
     {
-        GetByIdFileResponse response = await Mediator.Send(new GetByIdFileQuery { FullPath = fullPath });
+        IActionResult response = await Mediator.Send(new GetByIdFileQuery { FullPath = fullPath });
 
         return Ok(response);
     }
