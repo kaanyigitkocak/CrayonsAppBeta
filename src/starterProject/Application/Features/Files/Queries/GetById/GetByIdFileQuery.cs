@@ -9,11 +9,11 @@ using File = Domain.Entities.File;
 
 namespace Application.Features.Files.Queries.GetById;
 
-public class GetByIdFileQuery : IRequest<IActionResult>
+public class GetByIdFileQuery : IRequest<GetByIdFileResponse>
 {
     public string FullPath { get; set; }
 
-    public class GetByIdFileQueryHandler : IRequestHandler<GetByIdFileQuery, IActionResult>
+    public class GetByIdFileQueryHandler : IRequestHandler<GetByIdFileQuery, GetByIdFileResponse>
     {
         private readonly IFileStorage _fileStorage;
         private readonly IMapper _mapper;
@@ -28,12 +28,12 @@ public class GetByIdFileQuery : IRequest<IActionResult>
             _fileBusinessRules = fileBusinessRules;
         }
 
-        public async Task<IActionResult> Handle(GetByIdFileQuery request, CancellationToken cancellationToken)
+        public async Task<GetByIdFileResponse> Handle(GetByIdFileQuery request, CancellationToken cancellationToken)
         {
             File? file = await _fileRepository.GetAsync(predicate: f => f.FullPath == request.FullPath, cancellationToken: cancellationToken);
             IActionResult fileResult = await _fileStorage.Download(request.FullPath);
 
-            return fileResult;
+            return new GetByIdFileResponse() { Result = fileResult};
         }
     }
 }

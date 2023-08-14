@@ -5,5 +5,5 @@ namespace Application.Features.Files.Queries.GetById;
 
 public class GetByIdFileResponse : IResponse
 {
-    public FileResult Result { get; set; }
+    public IActionResult Result { get; set; }
 }

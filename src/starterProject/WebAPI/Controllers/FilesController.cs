@@ -9,6 +9,7 @@ using Core.CrossCuttingConcerns.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
+using Nest;
 
 namespace WebAPI.Controllers;
 
@@ -55,18 +56,9 @@ public class FilesController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetById(string fullPath)
     {
-        var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
+        GetByIdFileResponse response = await Mediator.Send(new GetByIdFileQuery { FullPath = fullPath });
 
-        if (!System.IO.File.Exists(filePath))
-        {
-            throw new FileNotFoundException();
-        }
-
-        var contentType = MimeTypes.GetMimeType(filePath.GetSubstringFile());
-
-        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-
-        return new FileStreamResult(fileStream, contentType);
+        return Ok(response);
     }
 
   

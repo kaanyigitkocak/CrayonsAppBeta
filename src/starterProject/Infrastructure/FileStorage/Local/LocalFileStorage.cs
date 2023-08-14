@@ -29,13 +29,13 @@ namespace Infrastructure.FileStorage.Local
                 throw new NotImplementedException();
             }
 
-            var uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            string uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
             Directory.CreateDirectory(uploadsPath);
 
-            var uniqueFileName = Guid.NewGuid().ToString()+ file.FileName.GetSubstringFile();
-            var filePath = Path.Combine(uploadsPath, uniqueFileName);
+            string uniqueFileName = Guid.NewGuid().ToString()+ file.FileName.GetSubstringFile();
+            string filePath = Path.Combine(uploadsPath, uniqueFileName);
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            using (FileStream stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
@@ -46,16 +46,16 @@ namespace Infrastructure.FileStorage.Local
 
         public async Task<IActionResult> Download(string fullPath)
         {
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
+            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
 
-            if (!System.IO.File.Exists(filePath))
+            if (!FileSys.Exists(filePath))
             {
                 throw new FileNotFoundException();
             }
 
-            var contentType = MimeTypes.GetMimeType(filePath.GetSubstringFile());
+            string contentType = MimeTypes.GetMimeType(filePath.GetSubstringFile());
 
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             
             return new FileStreamResult(fileStream, contentType);
             
@@ -63,7 +63,7 @@ namespace Infrastructure.FileStorage.Local
 
         public async Task<string> Update(string fullPath, IFormFile newFile)
         {
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
+            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
 
             if (!FileSys.Exists(filePath))
             {
@@ -74,12 +74,12 @@ namespace Infrastructure.FileStorage.Local
 
             if (newFile != null && newFile.Length > 0)
             {
-                var uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                string uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
                 Directory.CreateDirectory(uploadsPath);
 
-                var newFilePath = Path.Combine(uploadsPath, fullPath);
+                string newFilePath = Path.Combine(uploadsPath, fullPath);
 
-                using (var stream = new FileStream(newFilePath, FileMode.Create))
+                using (FileStream stream = new FileStream(newFilePath, FileMode.Create))
                 {
                     await newFile.CopyToAsync(stream);
                 }
@@ -92,7 +92,7 @@ namespace Infrastructure.FileStorage.Local
 
         public async Task<string> Delete(string fullPath)
         {
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
+            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
 
             if (!FileSys.Exists(filePath))
             {
