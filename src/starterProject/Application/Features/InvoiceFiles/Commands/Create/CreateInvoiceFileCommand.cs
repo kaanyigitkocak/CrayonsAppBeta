@@ -41,8 +41,9 @@ public class CreateInvoiceFileCommand : IRequest<CreatedInvoiceFileResponse>
             invoiceFile.Name = fileUploadDto.Name;
             invoiceFile.MimeType = fileUploadDto.MimeType;
 
-            await _fileRepository.AddAsync(invoiceFile);
-            CreatedInvoiceFileResponse  createdInvoiceFileResponse = _mapper.Map<CreatedInvoiceFileResponse>(request);
+            InvoiceFile response = await _fileRepository.AddAsync(invoiceFile);
+
+            CreatedInvoiceFileResponse  createdInvoiceFileResponse = _mapper.Map<CreatedInvoiceFileResponse>(response);
             return createdInvoiceFileResponse;
         }
     }

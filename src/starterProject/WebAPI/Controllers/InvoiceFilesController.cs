@@ -20,7 +20,7 @@ namespace WebAPI.Controllers;
 public class InvoiceFilesController : BaseController
 {
     [HttpPost]
-    public async Task<IActionResult> Add(IFormFile formFile,[FromRoute] int id)
+    public async Task<IActionResult> Add(IFormFile formFile, int id)
     {
         CreateInvoiceFileCommand command = new CreateInvoiceFileCommand()
         { FormFile = formFile, InvoiceId = id};
