@@ -35,15 +35,7 @@ public class UpdateFileCommand : IRequest<UpdatedFileResponse>
 
         public async Task<UpdatedFileResponse> Handle(UpdateFileCommand request, CancellationToken cancellationToken)
         {
-            File? file = await _fileRepository.GetAsync(predicate: f => f.Name == request.FullPath, cancellationToken: cancellationToken);
-            string newPath = await _fileStorage.Update(request.FullPath, request.File);
-            file!.FullPath = Path.Combine("uploads", newPath);
-            file.Name = newPath;
-            file.MimeType = newPath.GetSubstringFile();
-            await _fileRepository.UpdateAsync(file!);
-
-            UpdatedFileResponse response = _mapper.Map<UpdatedFileResponse>(file);
-            return response;
+            throw new NotImplementedException();
         }
     }
 }

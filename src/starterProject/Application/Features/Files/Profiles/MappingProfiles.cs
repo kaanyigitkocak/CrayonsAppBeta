@@ -9,6 +9,7 @@ using Domain.Entities;
 using Core.Persistence.Paging;
 
 using File = Domain.Entities.File;
+using Application.Features.Files.Commands.Update;
 
 namespace Application.Features.Files.Profiles;
 

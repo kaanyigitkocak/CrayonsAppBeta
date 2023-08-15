@@ -10,9 +10,7 @@ public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
 {
     public void Configure(EntityTypeBuilder<Invoice> builder)
     {
-        builder.ToTable("Invoices");
-
-        
+        builder.ToTable("Invoices").HasKey(e => e.Id);
 
         builder.Property(t => t.Id).HasColumnName("Id").IsRequired();
         builder.Property(x => x.InvoiceNumber)
@@ -35,17 +33,13 @@ public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
         builder.Property(t => t.CreatedDate).HasColumnName("CreatedDate").IsRequired();
         builder.Property(t => t.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(t => t.DeletedDate).HasColumnName("DeletedDate");
-        builder.Property(t => t.FileId).HasColumnName("FileId");
-
-        builder.Property(t => t.ParentId).HasColumnName("ParentId");
-        builder.HasOne(x => x.Parent)
-            .WithMany()
-            .HasForeignKey(x => x.ParentId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne(x => x.File)
-           .WithOne(p => p.Invoice)
-           .HasForeignKey<Invoice>(p => p.FileId)
-           .OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(e => e.Parent)
+           .WithMany(p => p.Invoices)
+           .HasForeignKey(e => e.ParentId)
+           .OnDelete(DeleteBehavior.NoAction);
+        builder.HasMany(e => e.InvoiceFiles)
+            .WithOne(e => e.Invoice)
+            .HasForeignKey(e => e.InvoiceId)
+           .OnDelete(DeleteBehavior.Restrict);
     }
 }

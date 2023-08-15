@@ -1,3 +1,4 @@
+using Application.Features.Files.Dtos;
 using Application.Features.Files.Rules;
 using Application.Services.FileStorageService;
 using Application.Services.Repositories;
@@ -10,11 +11,11 @@ using File = Domain.Entities.File;
 
 namespace Application.Features.Files.Queries.GetById;
 
-public class GetByIdFileQuery : IRequest<IActionResult>
+public class GetByIdFileQuery : IRequest<FileDownloadDto>
 {
     public string FullPath { get; set; }
 
-    public class GetByIdFileQueryHandler : IRequestHandler<GetByIdFileQuery, IActionResult>
+    public class GetByIdFileQueryHandler : IRequestHandler<GetByIdFileQuery, FileDownloadDto>
     {
         private readonly IFileStorage _fileStorage;
         private readonly IMapper _mapper;
@@ -29,14 +30,9 @@ public class GetByIdFileQuery : IRequest<IActionResult>
             _fileBusinessRules = fileBusinessRules;
         }
 
-        public async Task<IActionResult> Handle(GetByIdFileQuery request, CancellationToken cancellationToken)
+        public async Task<FileDownloadDto> Handle(GetByIdFileQuery request, CancellationToken cancellationToken)
         {
-            File? file = await _fileRepository.GetAsync(predicate: f => f.FullPath == request.FullPath, cancellationToken: cancellationToken);
-            IActionResult fileResult = await _fileStorage.Download(request.FullPath);
-
-            return await _fileStorage.Download(request.FullPath);
-
-
+            throw new NotImplementedException();
         }
     }
 }

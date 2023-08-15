@@ -32,14 +32,7 @@ public class DeleteFileCommand : IRequest<DeletedFileResponse>
 
         public async Task<DeletedFileResponse> Handle(DeleteFileCommand request, CancellationToken cancellationToken)
         {
-            File? file = await _fileRepository.GetAsync(predicate: f => f.Id == request.Id, cancellationToken: cancellationToken);
-            await _fileBusinessRules.FileShouldExistWhenSelected(file);
-
-            await _fileRepository.DeleteAsync(file!);
-            await _fileStorage.Delete(file!.FullPath);
-
-            DeletedFileResponse response = _mapper.Map<DeletedFileResponse>(file);
-            return response;
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,7 +14,11 @@ public class BaseDbContext : DbContext
     public DbSet<School> Schools { get; set; }
     public DbSet<Parent> Parents { get; set; }
     public DbSet<Student> Students { get; set; }
+
     public DbSet<File> Files { get; set; }
+
+    public DbSet<InvoiceFile> InvoiceFiles { get; set; }
+    public DbSet<StudentFile> StudentFiles { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<EmailAuthenticator> EmailAuthenticators { get; set; }
     public DbSet<OperationClaim> OperationClaims { get; set; }

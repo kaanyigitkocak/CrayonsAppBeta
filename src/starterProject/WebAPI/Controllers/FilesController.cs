@@ -1,8 +1,10 @@
 using Application.Features.Files.Commands.Create;
 using Application.Features.Files.Commands.Delete;
 using Application.Features.Files.Commands.Update;
+using Application.Features.Files.Dtos;
 using Application.Features.Files.Queries.GetById;
 using Application.Features.Files.Queries.GetList;
+using Application.Features.Files.Commands.Update;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.CrossCuttingConcerns.Extensions;
@@ -56,9 +58,10 @@ public class FilesController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetById(string fullPath)
     {
-        IActionResult response = await Mediator.Send(new GetByIdFileQuery { FullPath = fullPath });
 
-        return Ok(response);
+        FileDownloadDto response = await Mediator.Send(new GetByIdFileQuery { FullPath = fullPath });
+
+        return new FileStreamResult(response.FileStream,response.ContentType);
     }
 
   

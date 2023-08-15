@@ -1,4 +1,5 @@
 ﻿using Core.Persistence.Repositories;
+using Core.Security.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,5 @@ public  class File : Entity<int>
     public string FullPath { get; set; }
 
     public string MimeType { get; set; }
-    public virtual Student Student { get; set; }
-    public virtual Invoice Invoice { get; set; }
+    public string Discriminator { get; set; }
 }

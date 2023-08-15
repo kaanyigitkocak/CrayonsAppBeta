@@ -14,7 +14,6 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
         builder.Property(t => t.Id).HasColumnName("Id").IsRequired();
         builder.Property(t => t.Class).HasColumnName("Class").IsRequired();
         builder.Property(t => t.SchoolId).HasColumnName("SchoolId");
-        builder.Property(t => t.FileId).HasColumnName("FileId");
         builder.Property(t => t.ParentId).HasColumnName("ParentId");
         builder.Property(t => t.TeacherId).HasColumnName("TeacherId");
         builder.Property(t => t.DateOfBirth).HasColumnName("DateOfBirth").IsRequired();
@@ -26,10 +25,10 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
             .WithMany(s => s.Students)
             .HasForeignKey(p => p.SchoolId)
             .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(x => x.File)
-            .WithOne(p => p.Student)
-            .HasForeignKey<Student>(p => p.FileId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.HasMany(s => s.StudentFiles)
+            .WithOne(sf => sf.Student)
+            .HasForeignKey(sf => sf.StudentId)
+            .OnDelete(DeleteBehavior.NoAction);
 
 
         builder.HasOne(t => t.Parent)

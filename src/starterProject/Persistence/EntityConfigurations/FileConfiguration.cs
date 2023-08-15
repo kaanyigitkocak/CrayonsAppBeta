@@ -9,12 +9,12 @@ public class FileConfiguration : IEntityTypeConfiguration<File>
 {
     public void Configure(EntityTypeBuilder<File> builder)
     {
-        builder.ToTable("Files").HasKey(x => x.Id);
-        
-        
+        builder.ToTable("Files");
+        builder.HasKey(e => e.Id);
         
 
         builder.Property(t => t.Id).HasColumnName("Id").IsRequired();
+        builder.Property(t => t.Discriminator).HasColumnName("Discriminator").IsRequired();
         builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(100);
@@ -27,15 +27,6 @@ public class FileConfiguration : IEntityTypeConfiguration<File>
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasOne(x => x.Student)
-     .WithOne(s => s.File)
-     .HasForeignKey<Student>(s => s.FileId)
-     .OnDelete(DeleteBehavior.NoAction);
-
-        builder.HasOne(x => x.Invoice)
-    .WithOne(s => s.File)
-    .HasForeignKey<Invoice>(s => s.FileId)
-    .OnDelete(DeleteBehavior.NoAction);
 
     }
 }

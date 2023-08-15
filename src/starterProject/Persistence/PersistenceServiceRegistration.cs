@@ -22,11 +22,13 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ITeacherRepository, TeacherRepository>();
         services.AddScoped<ISchoolRepository, SchoolRepository>();
         services.AddScoped<IStudentRepository, StudentRepository>();
+
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
 
         services.AddScoped<IParentFeatureRepository, ParentFeatureRepository>();
         services.AddScoped<ISchoolRepository, SchoolRepository>();
+        services.AddScoped<IInvoiceFileRepository, InvoiceFileRepository>();
         services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         services.AddScoped<IFileRepository, FileRepository>();
         return services;

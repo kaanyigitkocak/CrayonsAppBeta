@@ -31,18 +31,7 @@ public class CreateFileCommand : IRequest<CreatedFileResponse>
 
         public async Task<CreatedFileResponse> Handle(CreateFileCommand request, CancellationToken cancellationToken)
         {
-            string fullPath = await _fileStorage.Upload(request.FormFile);
-            File file = new()
-            {
-                Name = fullPath,
-                FullPath = Path.Combine("uploads", fullPath),
-                MimeType = fullPath.GetSubstringFile()
-            };
-          
-            await _fileRepository.AddAsync(file);
-
-            CreatedFileResponse response = _mapper.Map<CreatedFileResponse>(file);
-            return response;
+            throw new NotImplementedException();
         }
     }
 }

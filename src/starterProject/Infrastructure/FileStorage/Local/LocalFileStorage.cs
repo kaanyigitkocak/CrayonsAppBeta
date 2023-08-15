@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Application.Features.Files.Dtos;
 using Application.Services.FileStorageService;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.CrossCuttingConcerns.Extensions;
@@ -22,32 +23,34 @@ namespace Infrastructure.FileStorage.Local
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<string> Upload(IFormFile file)
+        public async Task<FileUploadDto> Upload(IFormFile file, File fileDb)
         {
             if (file == null || file.Length == 0)
             {
                 throw new NotImplementedException();
             }
 
-            string uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            string uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath);
             Directory.CreateDirectory(uploadsPath);
 
-            string uniqueFileName = Guid.NewGuid().ToString()+ file.FileName.GetSubstringFile();
+            string mimeType = file.FileName.GetSubstringFile();
+            string uniqueFileName = Guid.NewGuid().ToString() + mimeType;
             string filePath = Path.Combine(uploadsPath, uniqueFileName);
 
             using (FileStream stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
-
-            return uniqueFileName;
+            string returnPath = Path.Combine(uniqueFileName);
+            return new FileUploadDto(returnPath, uniqueFileName,mimeType);
         }
 
 
-        public async Task<IActionResult> Download(string fullPath)
+        public async Task<FileDownloadDto> Download(File fileDb)
         {
-            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
-
+            //string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
+            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileDb.FullPath);
+            
             if (!FileSys.Exists(filePath))
             {
                 throw new FileNotFoundException();
@@ -57,13 +60,14 @@ namespace Infrastructure.FileStorage.Local
 
             FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             
-            return new FileStreamResult(fileStream, contentType);
+            return new FileDownloadDto(fileStream, contentType);
             
         }
 
-        public async Task<string> Update(string fullPath, IFormFile newFile)
+        public async Task<string> Update(File fileDb, IFormFile newFile)
         {
-            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
+            //string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
+            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileDb.Discriminator.ToString());
 
             if (!FileSys.Exists(filePath))
             {
@@ -74,25 +78,20 @@ namespace Infrastructure.FileStorage.Local
 
             if (newFile != null && newFile.Length > 0)
             {
-                string uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-                Directory.CreateDirectory(uploadsPath);
-
-                string newFilePath = Path.Combine(uploadsPath, fullPath);
-
-                using (FileStream stream = new FileStream(newFilePath, FileMode.Create))
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
                 {
                     await newFile.CopyToAsync(stream);
                 }
 
-                return fullPath;
+                return fileDb.FullPath;
             }
 
             throw new NotImplementedException();
         }
 
-        public async Task<string> Delete(string fullPath)
+        public async Task<string> Delete(File fileDb)
         {
-            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
+            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileDb.FullPath);
 
             if (!FileSys.Exists(filePath))
             {
@@ -101,7 +100,7 @@ namespace Infrastructure.FileStorage.Local
 
             FileSys.Delete(filePath);
 
-            return fullPath;
+            return fileDb.FullPath;
         }
         
 

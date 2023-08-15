@@ -417,8 +417,8 @@ namespace Persistence.Migrations
                             Email = "admin@admin.com",
                             FirstName = "Admin",
                             LastName = "NArchitecture",
-                            PasswordHash = new byte[] { 197, 124, 130, 30, 221, 111, 84, 82, 202, 223, 61, 134, 52, 228, 192, 78, 189, 114, 136, 61, 26, 231, 141, 100, 39, 192, 64, 140, 223, 124, 185, 67, 30, 163, 189, 84, 11, 68, 190, 41, 122, 194, 12, 220, 248, 84, 182, 32, 255, 188, 127, 28, 46, 66, 7, 113, 194, 32, 0, 167, 179, 85, 170, 235 },
-                            PasswordSalt = new byte[] { 245, 137, 41, 95, 122, 156, 67, 147, 178, 34, 211, 189, 228, 82, 25, 183, 18, 49, 191, 44, 40, 250, 65, 142, 219, 112, 1, 10, 11, 52, 242, 231, 38, 65, 11, 31, 112, 125, 27, 52, 121, 24, 207, 162, 212, 220, 51, 14, 98, 185, 100, 155, 153, 220, 121, 229, 61, 210, 94, 22, 246, 129, 231, 48, 0, 117, 180, 233, 76, 184, 26, 241, 36, 148, 78, 56, 179, 54, 59, 234, 172, 212, 126, 212, 192, 51, 114, 21, 1, 242, 43, 49, 116, 57, 185, 153, 116, 166, 210, 115, 112, 124, 89, 252, 224, 87, 50, 65, 131, 162, 152, 50, 3, 13, 1, 60, 121, 234, 222, 71, 172, 57, 48, 191, 159, 47, 10, 10 },
+                            PasswordHash = new byte[] { 59, 112, 155, 65, 49, 77, 48, 48, 226, 46, 113, 238, 31, 24, 85, 23, 95, 109, 87, 169, 126, 230, 44, 150, 46, 48, 79, 198, 200, 68, 161, 28, 63, 160, 68, 209, 97, 214, 15, 205, 44, 69, 153, 26, 123, 1, 167, 112, 82, 180, 2, 79, 46, 213, 11, 234, 6, 58, 226, 17, 121, 122, 192, 113 },
+                            PasswordSalt = new byte[] { 102, 86, 164, 66, 105, 181, 48, 29, 50, 72, 136, 216, 79, 170, 7, 229, 86, 67, 168, 235, 202, 19, 182, 245, 28, 94, 172, 220, 239, 158, 137, 123, 226, 182, 53, 150, 124, 102, 15, 205, 42, 99, 200, 150, 249, 98, 14, 186, 189, 30, 33, 6, 30, 241, 97, 146, 178, 134, 213, 5, 113, 209, 46, 190, 250, 182, 82, 128, 128, 38, 152, 229, 150, 178, 248, 119, 177, 28, 177, 134, 137, 125, 84, 242, 30, 29, 147, 252, 21, 16, 102, 3, 65, 252, 74, 103, 231, 231, 102, 73, 187, 164, 152, 102, 227, 185, 107, 193, 169, 157, 123, 61, 121, 139, 85, 108, 211, 200, 81, 64, 194, 114, 51, 6, 92, 221, 227, 159 },
                             Status = true
                         });
                 });
@@ -485,6 +485,11 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Discriminator");
+
                     b.Property<string>("FullPath")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -506,6 +511,10 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Files", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("File");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Entities.Invoice", b =>
@@ -536,10 +545,6 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FileId")
-                        .HasColumnType("int")
-                        .HasColumnName("FileId");
-
                     b.Property<string>("InvoiceNumber")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -549,17 +554,13 @@ namespace Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ParentId")
-                        .HasColumnType("int")
-                        .HasColumnName("ParentId");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FileId")
-                        .IsUnique();
 
                     b.HasIndex("ParentId");
 
@@ -707,7 +708,7 @@ namespace Persistence.Migrations
                         {
                             Id = 1,
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2023, 8, 13, 11, 12, 21, 231, DateTimeKind.Local).AddTicks(7581),
+                            CreatedDate = new DateTime(2023, 8, 15, 23, 53, 22, 159, DateTimeKind.Local).AddTicks(4093),
                             Name = "Sample School 1",
                             PhoneNumber = "555-1234"
                         },
@@ -715,7 +716,7 @@ namespace Persistence.Migrations
                         {
                             Id = 2,
                             Address = "1234 Main St",
-                            CreatedDate = new DateTime(2023, 8, 13, 11, 12, 21, 231, DateTimeKind.Local).AddTicks(7595),
+                            CreatedDate = new DateTime(2023, 8, 15, 23, 53, 22, 159, DateTimeKind.Local).AddTicks(4111),
                             Name = "Sample School 2",
                             PhoneNumber = "555-12342"
                         });
@@ -747,10 +748,6 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletedDate");
 
-                    b.Property<int>("FileId")
-                        .HasColumnType("int")
-                        .HasColumnName("FileId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -772,9 +769,6 @@ namespace Persistence.Migrations
                         .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FileId")
-                        .IsUnique();
 
                     b.HasIndex("ParentId");
 
@@ -857,6 +851,30 @@ namespace Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Entities.InvoiceFile", b =>
+                {
+                    b.HasBaseType("Domain.Entities.File");
+
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasDiscriminator().HasValue("InvoiceFile");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StudentFile", b =>
+                {
+                    b.HasBaseType("Domain.Entities.File");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasDiscriminator().HasValue("StudentFile");
+                });
+
             modelBuilder.Entity("Core.Security.Entities.EmailAuthenticator", b =>
                 {
                     b.HasOne("Core.Security.Entities.User", "User")
@@ -911,19 +929,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Invoice", b =>
                 {
-                    b.HasOne("Domain.Entities.File", "File")
-                        .WithOne("Invoice")
-                        .HasForeignKey("Domain.Entities.Invoice", "FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.Parent", "Parent")
                         .WithMany("Invoices")
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("File");
 
                     b.Navigation("Parent");
                 });
@@ -941,12 +951,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Student", b =>
                 {
-                    b.HasOne("Domain.Entities.File", "File")
-                        .WithOne("Student")
-                        .HasForeignKey("Domain.Entities.Student", "FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.Parent", "Parent")
                         .WithMany("Students")
                         .HasForeignKey("ParentId")
@@ -964,8 +968,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("File");
 
                     b.Navigation("Parent");
 
@@ -985,6 +987,28 @@ namespace Persistence.Migrations
                     b.Navigation("School");
                 });
 
+            modelBuilder.Entity("Domain.Entities.InvoiceFile", b =>
+                {
+                    b.HasOne("Domain.Entities.Invoice", "Invoice")
+                        .WithMany("InvoiceFiles")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StudentFile", b =>
+                {
+                    b.HasOne("Domain.Entities.Student", "Student")
+                        .WithMany("StudentFiles")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Core.Security.Entities.OperationClaim", b =>
                 {
                     b.Navigation("UserOperationClaims");
@@ -1001,13 +1025,9 @@ namespace Persistence.Migrations
                     b.Navigation("UserOperationClaims");
                 });
 
-            modelBuilder.Entity("Domain.Entities.File", b =>
+            modelBuilder.Entity("Domain.Entities.Invoice", b =>
                 {
-                    b.Navigation("Invoice")
-                        .IsRequired();
-
-                    b.Navigation("Student")
-                        .IsRequired();
+                    b.Navigation("InvoiceFiles");
                 });
 
             modelBuilder.Entity("Domain.Entities.Parent", b =>
@@ -1025,6 +1045,11 @@ namespace Persistence.Migrations
                     b.Navigation("Students");
 
                     b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Student", b =>
+                {
+                    b.Navigation("StudentFiles");
                 });
 
             modelBuilder.Entity("Domain.Entities.Teacher", b =>
