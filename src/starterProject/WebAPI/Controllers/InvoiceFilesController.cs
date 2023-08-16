@@ -20,18 +20,18 @@ namespace WebAPI.Controllers;
 public class InvoiceFilesController : BaseController
 {
     [HttpPost]
-    public async Task<IActionResult> Add(IFormFile formFile, int id)
+    public async Task<IActionResult> Add(IFormFile formFile, int invoiceId)
     {
         CreateInvoiceFileCommand command = new CreateInvoiceFileCommand()
-        { FormFile = formFile, InvoiceId = id};
+        { FormFile = formFile, InvoiceId = invoiceId};
         CreatedInvoiceFileResponse response = await Mediator.Send(command);
 
         return Created(uri: "", response);
     }
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateInvoiceFileCommand updateInvoiceCommand)
+    public async Task<IActionResult> Update(IFormFile formFile, int id)
     {
-        UpdatedInvoiceFileResponse response = await Mediator.Send(updateInvoiceCommand);
+        UpdatedInvoiceFileResponse response = await Mediator.Send(new UpdateInvoiceFileCommand() {FormFile = formFile, Id = id });
 
         return Ok(response);
     }
@@ -47,7 +47,7 @@ public class InvoiceFilesController : BaseController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        DeletedInvoiceFileResponse response = await Mediator.Send(new DeleteInvoiceFileCommand { });
-        return Ok(response);
+        FileDownloadDto response = await Mediator.Send(new GetByIdInvoiceFileQuery{ Id = id});
+        return new FileStreamResult(response.FileStream, response.ContentType);
     }
 }

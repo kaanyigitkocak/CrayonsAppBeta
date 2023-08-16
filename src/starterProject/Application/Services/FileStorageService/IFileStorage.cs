@@ -7,7 +7,7 @@ namespace Application.Services.FileStorageService;
 public interface IFileStorage
 {
     Task<FileUploadDto> Upload(IFormFile file, File fileDb);
-    Task<FileDownloadDto> Download(File fileDb);
+    FileDownloadDto Download(File fileDb);
     Task<string> Update(File fileDb, IFormFile newFile);
-    Task<string> Delete(File fileDb);
+    string Delete(File fileDb);
 }

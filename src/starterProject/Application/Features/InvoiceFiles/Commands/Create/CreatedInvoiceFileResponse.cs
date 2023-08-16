@@ -5,5 +5,6 @@ namespace Application.Features.InvoiceFiles.Commands.Create;
 
 public class CreatedInvoiceFileResponse : IResponse
 {
-    public Invoice Invoice { get; set; }
+    public int Id { get; set; }
+    public int InvoiceId { get; set; }
 }

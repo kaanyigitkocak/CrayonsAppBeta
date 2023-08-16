@@ -18,20 +18,24 @@ public class DeleteInvoiceFileCommand : IRequest<DeletedInvoiceFileResponse>
 
         private readonly IFileStorage _fileStorage;
         private readonly IMapper _mapper;
-        private readonly IInvoiceFileRepository _nvoiceFileRepository;
+        private readonly IInvoiceFileRepository _invoiceFileRepository;
         private readonly InvoiceFileBusinessRules _invoiceFileBusinessRules;
 
-        public DeleteInvoiceFileCommandHandler(IFileStorage fileStorage, IMapper mapper, IInvoiceFileRepository nvoiceFileRepository, InvoiceFileBusinessRules invoiceFileBusinessRules)
+        public DeleteInvoiceFileCommandHandler(IFileStorage fileStorage, IMapper mapper, IInvoiceFileRepository invoiceFileRepository, InvoiceFileBusinessRules invoiceFileBusinessRules)
         {
             _fileStorage = fileStorage;
             _mapper = mapper;
-            _nvoiceFileRepository = nvoiceFileRepository;
+            _invoiceFileRepository = invoiceFileRepository;
             _invoiceFileBusinessRules = invoiceFileBusinessRules;
         }
 
         public async Task<DeletedInvoiceFileResponse> Handle(DeleteInvoiceFileCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+
+            InvoiceFile deleteFile = await _invoiceFileRepository.GetAsync( x => x.Id == request.Id);
+            await _invoiceFileRepository.DeleteAsync(deleteFile);
+            _fileStorage.Delete(deleteFile);
+            return new DeletedInvoiceFileResponse() { Id = request.Id };
         }
     }
 }

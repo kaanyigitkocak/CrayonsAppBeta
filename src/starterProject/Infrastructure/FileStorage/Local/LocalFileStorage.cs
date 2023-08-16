@@ -30,7 +30,7 @@ namespace Infrastructure.FileStorage.Local
                 throw new NotImplementedException();
             }
 
-            string uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath);
+            string uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, fileDb.Discriminator.ToString());
             Directory.CreateDirectory(uploadsPath);
 
             string mimeType = file.FileName.GetSubstringFile();
@@ -41,12 +41,12 @@ namespace Infrastructure.FileStorage.Local
             {
                 await file.CopyToAsync(stream);
             }
-            string returnPath = Path.Combine(uniqueFileName);
+            string returnPath = Path.Combine(fileDb.Discriminator.ToString(),uniqueFileName);
             return new FileUploadDto(returnPath, uniqueFileName,mimeType);
         }
 
 
-        public async Task<FileDownloadDto> Download(File fileDb)
+        public FileDownloadDto Download(File fileDb)
         {
             //string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
             string filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileDb.FullPath);
@@ -67,7 +67,7 @@ namespace Infrastructure.FileStorage.Local
         public async Task<string> Update(File fileDb, IFormFile newFile)
         {
             //string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
-            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileDb.Discriminator.ToString());
+            string filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileDb.FullPath);
 
             if (!FileSys.Exists(filePath))
             {
@@ -89,7 +89,7 @@ namespace Infrastructure.FileStorage.Local
             throw new NotImplementedException();
         }
 
-        public async Task<string> Delete(File fileDb)
+        public string Delete(File fileDb)
         {
             string filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileDb.FullPath);
 

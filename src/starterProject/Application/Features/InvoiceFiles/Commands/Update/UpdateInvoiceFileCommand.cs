@@ -13,27 +13,32 @@ namespace Application.Features.InvoiceFiles.Commands.Update;
 
 public class UpdateInvoiceFileCommand : IRequest<UpdatedInvoiceFileResponse>
 {
-    
+    public IFormFile FormFile { get; set; }
+    public int Id { get; set; }
 
     public class UpdateInvoiceFileCommandHandler : IRequestHandler<UpdateInvoiceFileCommand, UpdatedInvoiceFileResponse>
     {
 
         private readonly IFileStorage _fileStorage;
         private readonly IMapper _mapper;
-        private readonly IInvoiceFileRepository _nvoiceFileRepository;
+        private readonly IInvoiceFileRepository _invoiceFileRepository;
         private readonly InvoiceFileBusinessRules _invoiceFileBusinessRules;
 
-        public UpdateInvoiceFileCommandHandler(IFileStorage fileStorage, IMapper mapper, IInvoiceFileRepository nvoiceFileRepository, InvoiceFileBusinessRules invoiceFileBusinessRules)
+        public UpdateInvoiceFileCommandHandler(IFileStorage fileStorage, IMapper mapper, IInvoiceFileRepository invoiceFileRepository, InvoiceFileBusinessRules invoiceFileBusinessRules)
         {
             _fileStorage = fileStorage;
             _mapper = mapper;
-            _nvoiceFileRepository = nvoiceFileRepository;
+            _invoiceFileRepository = invoiceFileRepository;
             _invoiceFileBusinessRules = invoiceFileBusinessRules;
         }
 
         public async Task<UpdatedInvoiceFileResponse> Handle(UpdateInvoiceFileCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            InvoiceFile file = await _invoiceFileRepository.GetAsync(x => x.Id == request.Id);
+            file.Discriminator = "InvoiceFile";
+            await _fileStorage.Update(file, request.FormFile);
+            return new UpdatedInvoiceFileResponse() {Id = request.Id };
+
         }
     }
 }

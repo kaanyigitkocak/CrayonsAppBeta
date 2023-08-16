@@ -33,7 +33,7 @@ public class CreateInvoiceFileCommand : IRequest<CreatedInvoiceFileResponse>
 
         public async Task<CreatedInvoiceFileResponse> Handle(CreateInvoiceFileCommand request, CancellationToken cancellationToken)
         {
-            InvoiceFile invoiceFile = new() { InvoiceId = request.InvoiceId };
+            InvoiceFile invoiceFile = new() { InvoiceId = request.InvoiceId, Discriminator = "InvoiceFile" };
 
             FileUploadDto fileUploadDto = await _fileStorage.Upload(request.FormFile, invoiceFile);
 
