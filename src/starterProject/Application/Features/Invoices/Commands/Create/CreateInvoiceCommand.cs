@@ -1,12 +1,13 @@
 using Application.Features.Invoices.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Invoices.Commands.Create;
 
-public class CreateInvoiceCommand : IRequest<CreatedInvoiceResponse>
+public class CreateInvoiceCommand : IRequest<CreatedInvoiceResponse>, ICacheRemoverRequest
 {
     public string InvoiceNumber { get; set; }
     public string Detail { get; set; }
@@ -15,6 +16,12 @@ public class CreateInvoiceCommand : IRequest<CreatedInvoiceResponse>
     public DateTime DueDate { get; set; }
     public int ParentId { get; set; }
     public int FileId { get; set; }
+
+    public bool BypassCache => false;
+
+    public string? CacheKey => $"CreateInvoiceCommand";
+
+    public string? CacheGroupKey => "GetInvoice";
 
     public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand, CreatedInvoiceResponse>
     {

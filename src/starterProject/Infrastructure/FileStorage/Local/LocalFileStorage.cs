@@ -56,7 +56,7 @@ namespace Infrastructure.FileStorage.Local
                 throw new FileNotFoundException();
             }
 
-            string contentType = MimeTypes.GetMimeType(filePath.GetSubstringFile());
+            string contentType = MimeTypes.GetMimeType(fileDb.MimeType);
 
             FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             

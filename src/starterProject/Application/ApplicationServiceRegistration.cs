@@ -24,6 +24,8 @@ using Application.Services.Schools;
 using Core.Application.Pipelines.Timeout;
 using Application.Services.Invoices;
 using Application.Services.Files;
+using Hangfire;
+using Application.HangfireJobs.RecurringJobs;
 
 namespace Application;
 
@@ -31,6 +33,8 @@ public static class ApplicationServiceRegistration
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        services.AddHostedService<RecurringJobsServiceRegistration>();
+
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(configuration =>
         {

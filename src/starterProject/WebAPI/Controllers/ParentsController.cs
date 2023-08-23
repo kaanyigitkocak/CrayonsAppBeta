@@ -6,13 +6,16 @@ using Core.Application.Requests;
 using Core.Application.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace WebAPI.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+
 public class ParentsController : BaseController
 {
     [HttpGet("{Id}")]
+    
     public async Task<IActionResult> GetById([FromRoute] GetByIdParentQuery getByIdParentQuery)
     {
         GetByIdParentResponse result = await Mediator.Send(getByIdParentQuery);

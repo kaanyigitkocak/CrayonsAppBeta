@@ -1,4 +1,6 @@
+using Application.HangfireJobs.RecurringJobs;
 using Application.Services.Repositories;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,10 @@ public static class PersistenceServiceRegistration
         services.AddDbContext<BaseDbContext>(
             options => options.UseSqlServer(configuration.GetConnectionString("BaseDb123"))
         );
+        services.AddHangfire(config =>
+                config.UseSqlServerStorage(configuration.GetConnectionString("BaseDb123")));
+       
+        services.AddHangfireServer();
         services.AddScoped<IEmailAuthenticatorRepository, EmailAuthenticatorRepository>();
         services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
         services.AddScoped<IOtpAuthenticatorRepository, OtpAuthenticatorRepository>();

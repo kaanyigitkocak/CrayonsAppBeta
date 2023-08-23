@@ -16,6 +16,9 @@ using System.Text.Json;
 using WebAPI;
 using Infrastructure.FileStorage.Local;
 using Microsoft.Extensions.DependencyInjection;
+using Core.WebAPI.RateLimit.Policies;
+using Hangfire;
+using Application.HangfireJobs.RecurringJobs;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -29,11 +32,19 @@ builder.Services.AddControllers(options =>
             ReferenceHandler = ReferenceHandler.Preserve,
         }));
 });
-builder.Services.AddApplicationServices();
+
 builder.Services.AddSecurityServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddHttpContextAccessor();
+       
+
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddPolicy<string, CustomRateLimitPolicy>("CustomPolicy");
+});
 
 const string tokenOptionsConfigurationSection = "TokenOptions";
 TokenOptions tokenOptions =
@@ -55,8 +66,8 @@ builder.Services
         };
     });
 
-builder.Services.AddDistributedMemoryCache(); // InMemory
-// builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379"); // Redis
+//builder.Services.AddDistributedMemoryCache(); // InMemory
+builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379"); // Redis
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -86,7 +97,13 @@ builder.Services.AddSwaggerGen(opt =>
     opt.OperationFilter<BearerSecurityRequirementOperationFilter>();
 });
 
+
+
 WebApplication app = builder.Build();
+
+app.UseRateLimiter();
+
+app.UseHangfireDashboard("/hangfire");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -115,4 +132,6 @@ WebApiConfiguration webApiConfiguration =
     ?? throw new InvalidOperationException($"\"{webApiConfigurationSection}\" section cannot found in configuration.");
 app.UseCors(opt => opt.WithOrigins(webApiConfiguration.AllowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
+
 app.Run();
+

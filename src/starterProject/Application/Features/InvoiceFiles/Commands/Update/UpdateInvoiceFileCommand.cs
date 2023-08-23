@@ -35,8 +35,9 @@ public class UpdateInvoiceFileCommand : IRequest<UpdatedInvoiceFileResponse>
         public async Task<UpdatedInvoiceFileResponse> Handle(UpdateInvoiceFileCommand request, CancellationToken cancellationToken)
         {
             InvoiceFile file = await _invoiceFileRepository.GetAsync(x => x.Id == request.Id);
-            file.Discriminator = "InvoiceFile";
+            
             await _fileStorage.Update(file, request.FormFile);
+            await _invoiceFileRepository.UpdateAsync(file);
             return new UpdatedInvoiceFileResponse() {Id = request.Id };
 
         }

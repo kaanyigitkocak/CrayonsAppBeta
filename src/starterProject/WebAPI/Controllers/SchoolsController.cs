@@ -6,14 +6,17 @@ using Application.Features.Schools.Queries.GetList;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[EnableRateLimiting("CustomPolicy")]
 public class SchoolsController : BaseController
 {
     [HttpPost]
+
     public async Task<IActionResult> Add([FromBody] CreateSchoolCommand createSchoolCommand)
     {
         CreatedSchoolResponse response = await Mediator.Send(createSchoolCommand);
