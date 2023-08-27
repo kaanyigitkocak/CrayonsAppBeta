@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
+	  <PackageReference Include="BouncyCastle.NetCore" Version="1.9.0" />
 	  <PackageReference Include="CloudinaryDotNet" Version="1.20.0" />
+	  <PackageReference Include="itext7" Version="8.0.1" />
+	  <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.1" />
+	  <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions" Version="2.2.0" />
   </ItemGroup>

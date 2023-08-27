@@ -10,7 +10,7 @@ public  class MainJobs
 {
     public Task MailSend(int userId,string message)
     {
-        Console.WriteLine($"{userId} mail yollandi.{message}");
+        Console.WriteLine($"{userId} id  mail yollandi.{message}");
         return Task.CompletedTask;
     }
 }

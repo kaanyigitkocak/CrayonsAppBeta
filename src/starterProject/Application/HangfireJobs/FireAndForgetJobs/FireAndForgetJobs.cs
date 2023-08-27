@@ -11,6 +11,7 @@ public class FireAndForgetJobs
 
     public static void MailSend(int userId, string message)
     {
-        Hangfire.BackgroundJob.Enqueue<MainJobs.MainJobs>(x => x.MailSend(userId,message));
+        Hangfire.BackgroundJob.Enqueue<MainJobs.MainJobs>(x => x.MailSend(userId, message));
+        
     }
 }
