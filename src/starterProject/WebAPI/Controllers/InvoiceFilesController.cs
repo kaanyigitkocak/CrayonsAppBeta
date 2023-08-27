@@ -66,7 +66,7 @@ public class InvoiceFilesController : BaseController
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
         FileDownloadDto response = await Mediator.Send(new GetByIdInvoiceFileQuery { Id = id });
-        return new FileStreamResult(response.FileStream, response.ContentType);
+        return File(response.MsArray, response.ContentType, response.FileName);
     }
     [HttpGet("generatepdf")]
     public IActionResult GeneratePDF(string InvoiceNo)

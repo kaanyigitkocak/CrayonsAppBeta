@@ -61,7 +61,7 @@ public class FilesController : BaseController
 
         FileDownloadDto response = await Mediator.Send(new GetByIdFileQuery { FullPath = fullPath });
 
-        return new FileStreamResult(response.FileStream,response.ContentType);
+        return File(response.MsArray, response.ContentType, response.FileName);
     }
 
   

@@ -2,9 +2,11 @@
 using System.IO;
 using System.Threading.Tasks;
 using Application.Features.Files.Dtos;
+using Application.Features.InvoiceFiles.Commands.GeneratePdf;
 using Application.Services.FileStorageService;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.CrossCuttingConcerns.Extensions;
+using iText.Forms.Form.Element;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,9 +50,8 @@ namespace Infrastructure.FileStorage.Local
 
         public FileDownloadDto Download(File fileDb)
         {
-            //string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", fullPath);
             string filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileDb.FullPath);
-            
+
             if (!FileSys.Exists(filePath))
             {
                 throw new FileNotFoundException();
@@ -58,10 +59,17 @@ namespace Infrastructure.FileStorage.Local
 
             string contentType = MimeTypes.GetMimeType(fileDb.MimeType);
 
-            FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            
-            return new FileDownloadDto(fileStream, contentType);
-            
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    fileStream.CopyTo(memoryStream);
+                    memoryStream.Seek(0, SeekOrigin.Begin);  // Reset the memory stream position to the beginning
+
+                    return new FileDownloadDto() {  MsArray = memoryStream.ToArray(), ContentType = contentType, FileName = fileDb.Name };
+                }
+            }
+
         }
 
         public async Task<string> Update(File fileDb, IFormFile newFile)
