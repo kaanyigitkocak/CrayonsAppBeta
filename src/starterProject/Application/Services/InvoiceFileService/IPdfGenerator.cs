@@ -9,5 +9,5 @@ using System.Threading.Tasks;
 namespace Application.Services.InvoiceFileService;
 public interface IPdfGenerator
 {
-    public PdfDto PdfGenerator();
+    public Task<PdfDto> InvoicePdfGenerator(int invoiceId);
 }

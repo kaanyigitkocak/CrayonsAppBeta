@@ -39,12 +39,12 @@ public class GeneratePdfCommand : IRequest<GeneratePdfResponse>
         public async Task<GeneratePdfResponse> Handle(GeneratePdfCommand request, CancellationToken cancellationToken)
         {
             InvoiceFile invoiceFile = new() {InvoiceId = request.invoiceId, Discriminator = "InvoiceFile" };
-            PdfDto file = _pdfGenerator.PdfGenerator();
+            PdfDto file = await _pdfGenerator.InvoicePdfGenerator(request.invoiceId);
             FileUploadDto fileUploadDto = await _fileStorage.Upload(file.File, invoiceFile);
             invoiceFile.FullPath = fileUploadDto.FullPath;
             invoiceFile.Name = fileUploadDto.Name;
             invoiceFile.MimeType = fileUploadDto.MimeType;
-            InvoiceFile file2  = await _fileRepository.AddAsync(invoiceFile);
+            await _fileRepository.AddAsync(invoiceFile);
             return new() { Ms = file.MsArray, ContentType = file.ContentType, PdfName = fileUploadDto.Name};
         }
     }

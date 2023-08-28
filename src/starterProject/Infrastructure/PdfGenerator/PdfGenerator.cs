@@ -11,19 +11,27 @@ using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features.InvoiceFiles.Commands.GeneratePdf;
+using Application.Services.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Domain.Entities;
 
 namespace Infrastructure.PdfGenerator;
 public class PdfGenerator : IPdfGenerator
 {
     private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IInvoiceRepository _fileRepository;
 
-    public PdfGenerator(IWebHostEnvironment webHostEnvironment)
+    public PdfGenerator(IWebHostEnvironment webHostEnvironment, IInvoiceRepository fileRepository)
     {
         _webHostEnvironment = webHostEnvironment;
+        _fileRepository = fileRepository;
     }
 
-    PdfDto IPdfGenerator.PdfGenerator()
+    public async Task<PdfDto> InvoicePdfGenerator(int invoiceId)
     {
+        Invoice invoice = await _fileRepository.GetAsync(predicate: x => x.Id == invoiceId,
+                                 include: x=> x.Include(x => x.Parent)              
+        );
         using (MemoryStream ms = new MemoryStream())
         {
             PdfWriter writer = new PdfWriter(ms);
@@ -33,28 +41,19 @@ public class PdfGenerator : IPdfGenerator
             Paragraph header = new Paragraph("ORDER DETAIL").SetTextAlignment(TextAlignment.CENTER).SetFontSize(20);
             document.Add(header);
 
-            Paragraph subheader = new Paragraph("PDF CREATED USING ASP.NET C# WITH iTExT7 LIBRARY").SetTextAlignment(TextAlignment.CENTER).SetFontSize(10);
+            Paragraph subheader = new Paragraph($"PDF CREATED For {invoice.Parent.Name}").SetTextAlignment(TextAlignment.CENTER).SetFontSize(10);
             document.Add(subheader);
 
             LineSeparator ls = new LineSeparator(new SolidLine());
             document.Add(ls);
 
-            Paragraph sellerHeader = new Paragraph("Sold by:").SetBold().SetTextAlignment(TextAlignment.LEFT);
-            Paragraph sellerDetail = new Paragraph("Seller Company").SetTextAlignment(TextAlignment.LEFT);
-            Paragraph sellerAddress = new Paragraph("Mumbai, Maharashtra India").SetTextAlignment(TextAlignment.LEFT);
-            Paragraph sellerContact = new Paragraph("+91 1000000000").SetTextAlignment(TextAlignment.LEFT);
-
-            document.Add(sellerHeader);
-            document.Add(sellerDetail);
-            document.Add(sellerAddress);
-            document.Add(sellerContact);
 
             Paragraph customerHeader = new Paragraph("Customer details:").SetBold().SetTextAlignment(TextAlignment.RIGHT);
-            Paragraph customerDetail = new Paragraph("Customer ABC").SetTextAlignment(TextAlignment.RIGHT);
+            Paragraph customerDetail = new Paragraph($"Customer ABC{invoice.Parent.Name}").SetTextAlignment(TextAlignment.RIGHT);
             Paragraph customerAddress1 = new Paragraph("R783, Rose Apartments, Santacruz (E)").SetTextAlignment(TextAlignment.RIGHT);
             Paragraph customerAddress2 = new Paragraph("Mumbai 400054, Maharashtra India").SetTextAlignment(TextAlignment.RIGHT);
 
-            Paragraph customerContact = new Paragraph("+91 0000000000").SetTextAlignment(TextAlignment.RIGHT);
+            Paragraph customerContact = new Paragraph($"{invoice.Parent.PhoneNumber}").SetTextAlignment(TextAlignment.RIGHT);
 
             document.Add(customerHeader);
             document.Add(customerDetail);
@@ -62,11 +61,9 @@ public class PdfGenerator : IPdfGenerator
             document.Add(customerAddress2);
             document.Add(customerContact);
 
-            Paragraph orderNo = new Paragraph("Order No:15484659").SetBold().SetTextAlignment(TextAlignment.LEFT);
-            Paragraph invoiceNo = new Paragraph("Invoice No:MH-MU-1077").SetTextAlignment(TextAlignment.LEFT);
-            Paragraph invoiceTimestamp = new Paragraph("Date: 30/05/2021 04:25:37 PM").SetTextAlignment(TextAlignment.LEFT);
+            Paragraph invoiceNo = new Paragraph($"Invoice No:{invoice.InvoiceNumber}").SetTextAlignment(TextAlignment.LEFT);
+            Paragraph invoiceTimestamp = new Paragraph($"Date: {invoice.DueDate}").SetTextAlignment(TextAlignment.LEFT);
 
-            document.Add(orderNo);
             document.Add(invoiceNo);
             document.Add(invoiceTimestamp);
 
