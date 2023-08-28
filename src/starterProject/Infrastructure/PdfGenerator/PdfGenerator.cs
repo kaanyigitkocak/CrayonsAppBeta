@@ -30,7 +30,7 @@ public class PdfGenerator : IPdfGenerator
     public async Task<PdfDto> InvoicePdfGenerator(int invoiceId)
     {
         Invoice invoice = await _fileRepository.GetAsync(predicate: x => x.Id == invoiceId,
-                                 include: x=> x.Include(x => x.Parent)              
+                                 include: x=> x.Include(x => x.Parent)       
         );
         using (MemoryStream ms = new MemoryStream())
         {
@@ -49,11 +49,12 @@ public class PdfGenerator : IPdfGenerator
 
 
             Paragraph customerHeader = new Paragraph("Customer details:").SetBold().SetTextAlignment(TextAlignment.RIGHT);
-            Paragraph customerDetail = new Paragraph($"Customer ABC{invoice.Parent.Name}").SetTextAlignment(TextAlignment.RIGHT);
+            Paragraph customerDetail = new Paragraph($"Customer : {invoice.Parent.Name}").SetTextAlignment(TextAlignment.RIGHT);
             Paragraph customerAddress1 = new Paragraph("R783, Rose Apartments, Santacruz (E)").SetTextAlignment(TextAlignment.RIGHT);
             Paragraph customerAddress2 = new Paragraph("Mumbai 400054, Maharashtra India").SetTextAlignment(TextAlignment.RIGHT);
 
             Paragraph customerContact = new Paragraph($"{invoice.Parent.PhoneNumber}").SetTextAlignment(TextAlignment.RIGHT);
+
 
             document.Add(customerHeader);
             document.Add(customerDetail);
