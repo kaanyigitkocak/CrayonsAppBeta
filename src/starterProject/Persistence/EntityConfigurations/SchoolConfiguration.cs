@@ -19,8 +19,10 @@ public class SchoolConfiguration : IEntityTypeConfiguration<School>
         builder.Property(s => s.DeletedDate).HasColumnName("DeletedDate");
 
         builder.HasMany(t => t.Teachers).WithOne(t => t.School).HasForeignKey(s => s.SchoolId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(t => t.Students).WithOne(t => t.School).HasForeignKey(s => s.SchoolId).OnDelete(DeleteBehavior.Restrict);
+
         builder.HasQueryFilter(s => !s.DeletedDate.HasValue);
-        builder.HasData(GetSChoolSeeds());
+
     }
     private IEnumerable<School> GetSChoolSeeds()
     {

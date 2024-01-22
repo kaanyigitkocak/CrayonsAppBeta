@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231019114443_Init321")]
+    partial class Init321
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -417,8 +420,8 @@ namespace Persistence.Migrations
                             Email = "admin@admin.com",
                             FirstName = "Admin",
                             LastName = "NArchitecture",
-                            PasswordHash = new byte[] { 139, 28, 183, 40, 57, 176, 27, 215, 132, 112, 122, 172, 247, 31, 169, 74, 156, 126, 23, 154, 247, 18, 119, 157, 45, 117, 69, 118, 139, 113, 39, 233, 124, 182, 13, 46, 141, 58, 69, 56, 186, 51, 72, 252, 207, 125, 138, 142, 1, 127, 226, 125, 174, 48, 217, 255, 68, 172, 222, 88, 135, 54, 17, 108 },
-                            PasswordSalt = new byte[] { 96, 2, 202, 220, 75, 126, 46, 91, 66, 127, 21, 230, 178, 208, 181, 103, 101, 207, 214, 70, 150, 36, 55, 173, 64, 81, 150, 194, 81, 195, 249, 193, 27, 107, 170, 145, 4, 230, 91, 101, 103, 231, 181, 229, 217, 225, 103, 54, 17, 36, 140, 92, 111, 18, 39, 172, 24, 8, 61, 78, 250, 157, 151, 159, 217, 71, 134, 226, 5, 252, 122, 106, 192, 185, 197, 164, 22, 165, 24, 13, 148, 80, 65, 111, 18, 190, 214, 239, 4, 152, 39, 168, 122, 108, 143, 88, 12, 50, 154, 230, 104, 61, 146, 62, 174, 45, 229, 165, 211, 152, 193, 13, 162, 220, 99, 118, 185, 16, 153, 53, 119, 223, 171, 20, 209, 17, 59, 240 },
+                            PasswordHash = new byte[] { 191, 112, 0, 43, 152, 80, 176, 92, 74, 184, 37, 23, 241, 248, 248, 216, 175, 41, 93, 214, 26, 210, 172, 163, 178, 196, 94, 61, 114, 214, 175, 28, 37, 132, 102, 165, 104, 222, 163, 148, 68, 133, 254, 89, 87, 34, 29, 45, 205, 209, 177, 30, 198, 46, 39, 202, 222, 6, 232, 206, 240, 234, 102, 213 },
+                            PasswordSalt = new byte[] { 118, 26, 38, 226, 163, 8, 113, 117, 45, 139, 162, 70, 110, 14, 157, 81, 29, 186, 155, 239, 72, 188, 130, 211, 94, 201, 167, 147, 245, 202, 89, 100, 72, 84, 163, 71, 249, 156, 220, 31, 38, 4, 172, 202, 91, 2, 196, 142, 15, 10, 192, 43, 156, 19, 141, 95, 163, 225, 157, 197, 224, 79, 198, 50, 163, 217, 210, 66, 212, 206, 249, 143, 150, 247, 93, 22, 53, 81, 243, 154, 247, 127, 141, 201, 77, 139, 187, 251, 195, 152, 251, 203, 164, 239, 237, 216, 231, 145, 19, 132, 163, 86, 254, 33, 251, 92, 89, 185, 137, 18, 186, 116, 213, 31, 91, 106, 161, 220, 20, 157, 140, 88, 64, 126, 138, 181, 13, 192 },
                             Status = true
                         });
                 });
@@ -702,6 +705,24 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Schools", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2023, 10, 19, 14, 44, 43, 600, DateTimeKind.Local).AddTicks(7090),
+                            Name = "Sample School 1",
+                            PhoneNumber = "555-1234"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "1234 Main St",
+                            CreatedDate = new DateTime(2023, 10, 19, 14, 44, 43, 600, DateTimeKind.Local).AddTicks(7120),
+                            Name = "Sample School 2",
+                            PhoneNumber = "555-12342"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Student", b =>
